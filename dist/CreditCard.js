@@ -1,20 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function btnCheckCCNumber() {
+    // create a constant for accessing the credit card number input field
     const inputElement = document.getElementById('txt-cc-number');
+    // create a constant for accessing the paragraph for displaying results
     const outputParagraph = document.getElementById('info-paragraph');
     outputParagraph.innerHTML = '';
+    // check if the input field is not empty
     if (inputElement) {
+        // create a constant for storing the credit card number as an array of numbers as it was a string previously
         const CC = inputElement.value.split('').map(Number);
+        // check if the credit card number is 16 digits long, if not, display an error message
         if (CC.length == 16) {
             checkCCNumber(CC);
         }
         else {
             outputParagraph.innerHTML += 'Please enter a valid 16-digit credit card number.';
         }
-        return CC;
     }
-    return null;
 }
 // THIS IS WORKING, DO NOT TOUCH
 function makeCCNumber() {
@@ -59,7 +62,6 @@ function makeCCNumber() {
     console.log('Luhn sum:', CCTotal);
     console.log('Generated CC:', newCC);
 }
-// BROKEN BELOW
 function checkCCNumber(ccNumber) {
     const outputParagraph = document.getElementById('info-paragraph');
     outputParagraph.innerHTML = '';
