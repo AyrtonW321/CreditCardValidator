@@ -1,4 +1,3 @@
-
 function btnCheckCCNumber() {
     // create a constant for accessing the credit card number input field
     const inputElement = document.getElementById('txt-cc-number') as HTMLInputElement;
@@ -12,12 +11,49 @@ function btnCheckCCNumber() {
         // check if the credit card number is 16 digits long, if not, display an error message
         if (CC.length == 16){
             checkCCNumber(CC);
+            checkCCDetails(CC);
         } else {
             outputParagraph.innerHTML += 'Please enter a valid 16-digit credit card number.';
         }
     }
 }
 
+// Function to generate a new credit card number
+function checkCCNumber(ccNumber: number[]): boolean {
+    // create a constant for accessing the paragraph for displaying results
+    const outputParagraph = document.getElementById('info-paragraph') as HTMLInputElement;
+    // display the credit card number being checked in the console
+    console.log('Checking credit card number:', ccNumber);
+    // create a variable to store the Luhn sum
+    let luhnSum: number = 0;
+    // calculate the Luhn sum
+    for (let i = 0; i < ccNumber.length; i++) {
+        // get the digit at the current index (mainly to multiply it by 2 if it's every second digit from the right)
+        let digit: number = ccNumber[i];
+        // Luhn algorithm: double every second digit from the right
+        if ((ccNumber.length - i) % 2 === 0) {
+            digit *= 2;
+            // if the result is greater than 9, subtract 9 (same as adding the digits of the results, eg. 9*2 = 18, 1+8 = 9, 18-9 = 9)
+            if (digit > 9) {
+                digit -= 9;
+            }
+        }
+        // add the digit to the Luhn sum
+        luhnSum += digit;
+    }
+    // display the Luhn sum in the console
+    console.log('Luhn sum:', luhnSum);
+    // check if the calculated Luhn sum is divisible by 10, if so, return true, else, return false and display an error message
+    if (luhnSum % 10 === 0) {
+        console.log('Valid credit card number');
+        outputParagraph.innerHTML += 'Valid credit card number' + '<br>';
+        return true;
+    } else {
+        console.log('Invalid credit card number');
+        outputParagraph.innerHTML += 'Invalid credit card number' + '<br>';
+        return false;
+    }
+}
 
 // function to check  the credit card number using Luhn's algorithm
 function makeCCNumber(){
@@ -60,47 +96,46 @@ function makeCCNumber(){
     if (LuhnSum % 10 !==0){
         return makeCCNumber();
     }
-    const newCCNumber = newCC.join(''); // new constant for the generated credit card number
+    const newCCNumber = newCC.join('').toString(); // new constant for the generated credit card number, converted to string to be returned as a string
     // display the generated credit card number in the paragraph
     outputParagraph.innerHTML = 'Generated credit card number: ' + newCCNumber;
     // display the Luhn sum and the generated CC for debugging
     console.log('Generated credit card number: ' + newCCNumber);
     console.log('Luhn sum:', LuhnSum);
     console.log('Generated CC:', newCC);
+    return newCCNumber;
 }
 
-// Function to generate a new credit card number
-function checkCCNumber(ccNumber: number[]): boolean {
-    // create a constant for accessing the paragraph for displaying results
+function checkCCDetails(ccNumber: number[]) {
     const outputParagraph = document.getElementById('info-paragraph') as HTMLInputElement;
-    outputParagraph.innerHTML = '';
-    // display the credit card number being checked in the console
-    console.log('Checking credit card number:', ccNumber);
-    // create a variable to store the Luhn sum
-    let luhnSum: number = 0;
-    // calculate the Luhn sum
-    for (let i = 0; i < ccNumber.length; i++) {
-        // get the digit at the current index (mainly to multiply it by 2 if it's every second digit from the right)
-        let digit: number = ccNumber[i];
-        // Luhn algorithm: double every second digit from the right
-        if ((ccNumber.length - i) % 2 === 0) {
-            digit *= 2;
-            // if the result is greater than 9, subtract 9 (same as adding the digits of the results, eg. 9*2 = 18, 1+8 = 9, 18-9 = 9)
-            if (digit > 9) {
-                digit -= 9;
-            }
-        }
-        // add the digit to the Luhn sum
-        luhnSum += digit;
+    outputParagraph.innerHTML = 'Info about the credit card number:' + '<br>';
+    console.log(ccNumber);
+    let firstDigitInfo: string[] = ['Airlines', 'Airlines', 'Travel and Entertainment', 'Banking and Financial', 'Banking and Financial', 'Merchandising and Banking', 'Petroleum', 'Healthcare and Telecommunications', 'National Assignment'];
+    let firstDigit: number = ccNumber[0];
+    let first6Digits: number[] = ccNumber.slice(0, 6);
+    let first7To15Digits: number[] = ccNumber.slice(6, 15);
+    console.log(firstDigit);
+    console.log(first6Digits);
+    console.log(first7To15Digits);
+    // Check the first digit of the credit card number to determine the industry it was issued for
+    outputParagraph.innerHTML += 'This card was issued for the ' + firstDigitInfo[firstDigit-1] + ' industry' + '<br>';
+    // Check the first 6 digits of the credit card number to determine the type of card
+    if (first6Digits[0] == 4){
+        outputParagraph.innerHTML += 'This is a Visa card' + '<br>';
+    } else if (first6Digits[0] == 5 && first6Digits[1] >= 1 && first6Digits[1] <= 5){
+        outputParagraph.innerHTML += 'This is a MasterCard' + '<br>';
+    } else if (first6Digits[0] == 3 && first6Digits[1] == 4 || first6Digits[1] == 7){
+        outputParagraph.innerHTML += 'This is a American Express card' + '<br>';
+    } else if (first6Digits[0] == 6 && first6Digits[1] == 5){
+        outputParagraph.innerHTML += 'This is a Discover card' + '<br>';
+    } else if (first6Digits[0] == 6 && first6Digits[1] == 0 && first6Digits[2] == 1 && first6Digits[3] == 1){
+        outputParagraph.innerHTML += 'This is a Discover card' + '<br>';
+    } else if (first6Digits[0] == 6 && first6Digits[1] == 4 && first6Digits[2] == 4){
+        outputParagraph.innerHTML += 'This is a Discover card' + '<br>';
+    } else if (first6Digits = [3, 7, 6, 2, 1, 1]){
+        outputParagraph.innerHTML += 'This is a Signapore Airlines Krisflyer card' + '<br>';
+    } else if (first6Digits = [5, 2, 9, 9, 6, 2]){
+        outputParagraph.innerHTML += 'This is a pre-paid Much-Music Mastercard' + '<br>';
     }
-    // display the Luhn sum in the console
-    console.log('Luhn sum:', luhnSum);
-    // check if the calculated Luhn sum is divisible by 10, if so, return true, else, return false and display an error message
-    if (luhnSum % 10 === 0) {
-        return true;
-    } else {
-        console.log('Invalid credit card number');
-        outputParagraph.innerHTML = 'Invalid credit card number';
-        return false;
-    }
+    outputParagraph.innerHTML += '7 digits regarding your bank account number: '+ first7To15Digits.join('') + '<br>';
 }
