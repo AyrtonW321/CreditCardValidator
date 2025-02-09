@@ -1,13 +1,86 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: lightgrey;
+    height: 100vh;
+    flex-direction: column;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+div {
+    text-align: center;
+}
+
+#txt-cc-number {
+    width: 300px;
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+div>div {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+button {
+    width: 145px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#credit-card {
+    width: 350px;
+    height: 200px;
+    background: linear-gradient(135deg, #424242, #1c1c1c);
+    color: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+#chip {
+    width: 50px;
+    position: absolute;
+    top: 15px;
+    left: 20px;
+}
+
+#card-brand {
+    width: 60px;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+#card-number {
+    font-size: 22px;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.card-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    font-size: 14px;
+    text-transform: uppercase;
 }
