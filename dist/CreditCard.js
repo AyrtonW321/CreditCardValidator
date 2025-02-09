@@ -100,9 +100,9 @@ function makeCCNumber() {
     if (LuhnSum % 10 !== 0) {
         return makeCCNumber();
     }
-    const newCCNumber = newCC.join('').toString(); // new constant for the generated credit card number, converted to string to be returned as a string
-    // display the generated credit card number in the paragraph
-    outputParagraph.innerHTML = 'Generated credit card number: ' + newCCNumber;
+    // Add hyphens every 4 digits and remove the trailing hyphen
+    const newCCNumber = newCC.join('').replace(/(\d{4})/g, '$1-').slice(0, -1);
+    outputParagraph.innerHTML = newCCNumber;
     // display the Luhn sum and the generated CC for debugging
     console.log('Generated credit card number: ' + newCCNumber);
     console.log('Luhn sum:', LuhnSum);

@@ -96,7 +96,8 @@ function makeCCNumber(){
     if (LuhnSum % 10 !==0){
         return makeCCNumber();
     }
-    const newCCNumber = newCC.join('').replace(/(\d{4})/g, '$1-').slice(0, -1); // Add hyphens every 4 digits and remove the trailing hyphen
+    // Add hyphens every 4 digits and remove the trailing hyphen
+    const newCCNumber = newCC.join('').replace(/(\d{4})/g, '$1-').slice(0, -1); 
     outputParagraph.innerHTML = newCCNumber;
 
     // display the Luhn sum and the generated CC for debugging

@@ -21,10 +21,32 @@ div {
     border-radius: 5px;
 }
 
-div>div {
+div > div {
     display: flex;
     justify-content: center;
     gap: 10px;
+}
+
+.container {
+    border: 2px solid #007bff;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-container {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 80%; /* Adjust width */
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 button {
@@ -53,8 +75,11 @@ button:hover {
     margin-top: 20px;
     position: relative;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-
 
 #chip {
     width: 50px;
@@ -70,17 +95,28 @@ button:hover {
     right: 20px;
 }
 
-#card-number {
-    font-size: 22px;
-    letter-spacing: 3px;
+#info-paragraph {
+    font-size: 20px;
+    letter-spacing: 4px;
+    font-family: 'OCR A Std', monospace;
+    font-weight: bold;
     text-align: center;
-    margin-top: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
 }
 
 .card-details {
+    width: 100%;
+    position: absolute;
+    bottom: 15px;
+    left: 0;
     display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-    font-size: 14px;
+    justify-content: space-around;
+    padding: -40px 40px;
+    font-size: 20px;
     text-transform: uppercase;
+    font-family: 'OCR A Std', monospace;
 }
