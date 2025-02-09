@@ -4,7 +4,7 @@ body {
     align-items: center;
     height: 100vh;
     flex-direction: column;
-    background-color: #f4f4f4;
+    background-color: #d3cdcd;
     font-family: Arial, sans-serif;
 }
 
@@ -31,19 +31,19 @@ div > div {
     border: 2px solid #007bff;
     padding: 20px;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .info-container {
     display: none;
     text-align: center;
     margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.4);
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 80%; /* Adjust width */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    width: 80%;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
@@ -95,14 +95,13 @@ button:hover {
     right: 20px;
 }
 
-#info-paragraph {
+#card-number {
     font-size: 20px;
     letter-spacing: 4px;
     font-family: 'OCR A Std', monospace;
     font-weight: bold;
     text-align: center;
     position: absolute;
-    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     white-space: nowrap;
