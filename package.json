@@ -2,6 +2,14 @@
   "name": "2-credit-card-review",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://github.com/AyrtonW321/CreditCardValidator#readme",
+  "bugs": {
+    "url": "https://github.com/AyrtonW321/CreditCardValidator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AyrtonW321/CreditCardValidator.git"
+  },
   "license": "ISC",
   "author": "",
   "type": "commonjs",
