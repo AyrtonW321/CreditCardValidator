@@ -4,7 +4,9 @@ function btnCheckCCNumber() {
     // create a constant for accessing the paragraph for displaying results
     const outputParagraph = document.getElementById("info-paragraph") as HTMLInputElement;
     outputParagraph.innerHTML = "";
+    const infoContainer = document.getElementById("info-container") as HTMLDivElement;
     // check if the input field is not empty
+    infoContainer.style.display = "none";
     if (inputElement) {
         // create a constant for storing the credit card number as an array of numbers as it was a string previously
         const CC: number[] = inputElement.value.split("").map(Number);
@@ -13,6 +15,7 @@ function btnCheckCCNumber() {
             checkCCNumber(CC);
             checkCCDetails(CC);
         } else {
+            infoContainer.style.display = "block";
             outputParagraph.innerHTML += "Please enter a valid 16-digit credit card number.";
         }
     }
