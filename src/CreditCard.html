@@ -18,10 +18,20 @@
             <button type="button" id="btn-check-cc" onclick="btnCheckCCNumber()">
                 Check Credit Card Number
             </button>
-            <button type="button" id="btn-make-cc" onclick="makeCCNumber()">
+            <button type="button" id="btn-make-cc" onclick="generateCCNumber()">
                 Make Credit Card Number
-            </button>
+            </button>            
+            <div class="inputBox">
+                <select id="cardNameType">
+                    <option value="amex">American Express</option>
+                    <option value="discover">Discover</option>
+                    <option value="mastercard">Mastercard</option>
+                    <option value="visa">Visa</option>
+                    <option value="none">None of the Above</option>
+                </select>
+            </div>
         </div>
+
         <p id="output-number"></p>
     </div>
 

@@ -45,14 +45,19 @@ function checkCCNumber(ccNumber: number[]): boolean {
     }
 }
 
-function makeCCNumber() {
+function makeCCNumber(ccType: number) {
     let newCC: number[] = [];
     let LuhnSum: number = 0;
     const outputParagraph = document.getElementById(
         "card-number"
     ) as HTMLInputElement;
     outputParagraph.innerHTML = "";
-    for (let i = 0; i < 15; i++) {
+    const ccTypeArray: number[] = ccType.toString().split('').map(Number);
+    console.log(ccTypeArray);
+    for (let i = 0; i < ccTypeArray.length; i++) {
+        newCC.push(ccTypeArray[i]);
+    }
+    for (let i = ccTypeArray.length; i < 15; i++) {
         newCC.push(Math.floor(Math.random() * 10));
     }
     for (let i = 0; i < 15; i++) {
@@ -69,13 +74,13 @@ function makeCCNumber() {
     }
     let lastDigit = (10 - (LuhnSum % 10)) % 10;
     if (lastDigit < 0 || lastDigit > 9) {
-        return makeCCNumber();
+        return makeCCNumber(0);
     } else {
         newCC.push(lastDigit);
         LuhnSum += lastDigit;
     }
     if (LuhnSum % 10 !== 0) {
-        return makeCCNumber();
+        return makeCCNumber(0);
     }
     const newCCNumber = newCC
         .join("")
@@ -90,12 +95,9 @@ function makeCCNumber() {
 }
 
 function checkCCDetails(ccNumber: number[]) {
-    const outputParagraph = document.getElementById(
-        "info-paragraph"
-    ) as HTMLParagraphElement;
-    const infoContainer = document.getElementById(
-        "info-container"
-    ) as HTMLDivElement;
+    const outputParagraph = document.getElementById("info-paragraph") as HTMLParagraphElement;
+    const infoContainer = document.getElementById("info-container") as HTMLDivElement;
+    const cardBrandImg = document.getElementById('card-brand') as HTMLImageElement;
 
     outputParagraph.innerHTML = "Info about the credit card number:" + "<br>";
 
@@ -123,26 +125,28 @@ function checkCCDetails(ccNumber: number[]) {
     console.log("First 6 digits:", first6Digits);
     console.log("Digits 7-15:", first7To15Digits);
 
-    outputParagraph.innerHTML +=
-        "This card was issued for the " +
-        firstDigitInfo[firstDigit - 1] +
-        " industry" +
-        "<br>";
+    outputParagraph.innerHTML += "This card was issued for the " + firstDigitInfo[firstDigit - 1] + " industry" + "<br>";
+
+    let cardType = '';
 
     if (first6Digits[0] === 4) {
+        cardType = "visa";
         outputParagraph.innerHTML += "This is a Visa card" + "<br>";
     } else if (
         first6Digits[0] === 5 &&
         first6Digits[1] >= 1 &&
         first6Digits[1] <= 5
     ) {
+        cardType = "mastercard";
         outputParagraph.innerHTML += "This is a MasterCard" + "<br>";
     } else if (
         first6Digits[0] === 3 &&
         (first6Digits[1] === 4 || first6Digits[1] === 7)
     ) {
+        cardType = "amex";
         outputParagraph.innerHTML += "This is an American Express card" + "<br>";
     } else if (first6Digits[0] === 6 && first6Digits[1] === 5) {
+        cardType = "discover";
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     } else if (
         first6Digits[0] === 6 &&
@@ -160,19 +164,50 @@ function checkCCDetails(ccNumber: number[]) {
     } else if (
         JSON.stringify(first6Digits) === JSON.stringify([3, 7, 6, 2, 1, 1])
     ) {
-        outputParagraph.innerHTML +=
-            "This is a Singapore Airlines Krisflyer card" + "<br>";
+        outputParagraph.innerHTML +="This is a Singapore Airlines Krisflyer card" + "<br>";
     } else if (
         JSON.stringify(first6Digits) === JSON.stringify([5, 2, 9, 9, 6, 2])
     ) {
-        outputParagraph.innerHTML +=
-            "This is a pre-paid MuchMusic Mastercard" + "<br>";
+        outputParagraph.innerHTML += "This is a pre-paid MuchMusic Mastercard" + "<br>";
     }
 
-    outputParagraph.innerHTML +=
-        "7 digits regarding your bank account number: " +
-        first7To15Digits.join("") +
-        "<br>";
+    if (cardType !== '') {
+        cardBrandImg.src = `../imgs/${cardType}.png`; 
+    } else {
+        cardBrandImg.src = '../imgs/default.png';
+        cardBrandImg.alt = 'Unknown Card';
+    }
+
+    outputParagraph.innerHTML += "7 digits regarding your bank account number: " + first7To15Digits.join("") + "<br>";
 
     infoContainer.style.display = "block";
+}
+
+
+
+
+
+
+function generateCCNumber() {
+    const cardTypeDropdown = document.getElementById("cardNameType") as HTMLSelectElement;
+    const selectedType = cardTypeDropdown.value;
+
+    let prefix = 0; // Default for "None of the Above"
+    
+    switch (selectedType) {
+        case "visa":
+            prefix = 4;
+            break;
+        case "mastercard":
+            prefix = 5;
+            break;
+        case "amex":
+            prefix = 3;
+            break;
+        case "discover":
+            prefix = 6;
+            break;
+    }
+
+    makeCCNumber(prefix);
 }
