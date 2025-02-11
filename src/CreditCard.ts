@@ -1,9 +1,11 @@
 function btnCheckCCNumber() {
     const inputElement = document.getElementById("txt-cc-number") as HTMLInputElement;
     const outputParagraph = document.getElementById("info-paragraph") as HTMLInputElement;
-    outputParagraph.innerHTML = "";
     const infoContainer = document.getElementById("info-container") as HTMLDivElement;
+
+    outputParagraph.innerHTML = "";
     infoContainer.style.display = "none";
+
     if (inputElement) {
         const CC: number[] = inputElement.value.split("").map(Number);
         if (CC.length == 16) {
@@ -17,9 +19,8 @@ function btnCheckCCNumber() {
 }
 
 function checkCCNumber(ccNumber: number[]): boolean {
-    const outputParagraph = document.getElementById(
-        "info-paragraph"
-    ) as HTMLInputElement;
+    const outputParagraph = document.getElementById("info-paragraph") as HTMLInputElement;
+
     console.log("Checking credit card number:", ccNumber);
     let luhnSum: number = 0;
 
@@ -45,63 +46,15 @@ function checkCCNumber(ccNumber: number[]): boolean {
     }
 }
 
-function makeCCNumber(ccType: number) {
-    let newCC: number[] = [];
-    let LuhnSum: number = 0;
-    const outputParagraph = document.getElementById(
-        "card-number"
-    ) as HTMLInputElement;
-    outputParagraph.innerHTML = "";
-    const ccTypeArray: number[] = ccType.toString().split('').map(Number);
-    console.log(ccTypeArray);
-    for (let i = 0; i < ccTypeArray.length; i++) {
-        newCC.push(ccTypeArray[i]);
-    }
-    for (let i = ccTypeArray.length; i < 15; i++) {
-        newCC.push(Math.floor(Math.random() * 10));
-    }
-    for (let i = 0; i < 15; i++) {
-        let digit: number = newCC[i];
-        if ((14 - i) % 2 === 0) {
-            digit *= 2;
-            if (digit > 9) {
-                digit -= 9;
-            }
-            LuhnSum += digit;
-        } else {
-            LuhnSum += digit;
-        }
-    }
-    let lastDigit = (10 - (LuhnSum % 10)) % 10;
-    if (lastDigit < 0 || lastDigit > 9) {
-        return makeCCNumber(0);
-    } else {
-        newCC.push(lastDigit);
-        LuhnSum += lastDigit;
-    }
-    if (LuhnSum % 10 !== 0) {
-        return makeCCNumber(0);
-    }
-    const newCCNumber = newCC
-        .join("")
-        .replace(/(\d{4})/g, "$1-")
-        .slice(0, -1);
-    outputParagraph.innerHTML = newCCNumber;
-
-    console.log("Generated credit card number: " + newCCNumber);
-    console.log("Luhn sum:", LuhnSum);
-    console.log("Generated CC:", newCC);
-    return newCCNumber;
-}
-
 function checkCCDetails(ccNumber: number[]) {
     const outputParagraph = document.getElementById("info-paragraph") as HTMLParagraphElement;
     const infoContainer = document.getElementById("info-container") as HTMLDivElement;
-    const cardBrandImg = document.getElementById('card-brand') as HTMLImageElement;
-
+    
     outputParagraph.innerHTML = "Info about the credit card number:" + "<br>";
 
     console.log(ccNumber);
+
+    let cardType: string = "";
 
     let firstDigitInfo: string[] = [
         "Airlines",
@@ -126,8 +79,6 @@ function checkCCDetails(ccNumber: number[]) {
     console.log("Digits 7-15:", first7To15Digits);
 
     outputParagraph.innerHTML += "This card was issued for the " + firstDigitInfo[firstDigit - 1] + " industry" + "<br>";
-
-    let cardType = '';
 
     if (first6Digits[0] === 4) {
         cardType = "visa";
@@ -171,43 +122,114 @@ function checkCCDetails(ccNumber: number[]) {
         outputParagraph.innerHTML += "This is a pre-paid MuchMusic Mastercard" + "<br>";
     }
 
-    if (cardType !== '') {
-        cardBrandImg.src = `../imgs/${cardType}.png`; 
-    } else {
-        cardBrandImg.src = '../imgs/default.png';
-        cardBrandImg.alt = 'Unknown Card';
-    }
+    updateCardBrandImage(cardType);
 
     outputParagraph.innerHTML += "7 digits regarding your bank account number: " + first7To15Digits.join("") + "<br>";
 
     infoContainer.style.display = "block";
 }
 
-
-
-
-
-
 function generateCCNumber() {
     const cardTypeDropdown = document.getElementById("cardNameType") as HTMLSelectElement;
     const selectedType = cardTypeDropdown.value;
 
-    let prefix = 0; // Default for "None of the Above"
-    
+    let prefix = 0;
+
     switch (selectedType) {
         case "visa":
             prefix = 4;
             break;
         case "mastercard":
-            prefix = 5;
+            prefix = Math.floor(Math.random() * 5) + 51;
             break;
         case "amex":
-            prefix = 3;
+            prefix = Math.random() < 0.5 ? 34 : 37;
             break;
         case "discover":
-            prefix = 6;
+            prefix = Math.random() < 0.5 ? 6011 : 644;
+            break;
+        default:
+            prefix = 0;
             break;
     }
 
     makeCCNumber(prefix);
+}
+
+function updateCardBrandImage(cardType: string) {
+    const cardBrandImg = document.getElementById('card-brand') as HTMLImageElement;
+
+    if (cardType !== '') {
+        cardBrandImg.src = `../imgs/${cardType}.png`;
+        cardBrandImg.alt = `${cardType} Card`;
+    } else {
+        cardBrandImg.src = '../imgs/default.png';
+        cardBrandImg.alt = 'Unknown Card';
+    }
+}
+
+function makeCCNumber(ccType: number) {
+    let newCC: number[] = [];
+    let LuhnSum: number = 0;
+
+    const outputParagraph = document.getElementById("card-number") as HTMLInputElement;
+    const ccTypeArray: number[] = ccType.toString().split('').map(Number);
+
+    outputParagraph.innerHTML = "";
+    console.log(ccTypeArray);
+
+    for (let i = 0; i < ccTypeArray.length; i++) {
+        newCC.push(ccTypeArray[i]);
+    }
+
+    for (let i = ccTypeArray.length; i < 15; i++) {
+        newCC.push(Math.floor(Math.random() * 10));
+    }
+
+    for (let i = 0; i < 15; i++) {
+        let digit: number = newCC[i];
+        if ((14 - i) % 2 === 0) {
+            digit *= 2;
+            if (digit > 9) {
+                digit -= 9;
+            }
+            LuhnSum += digit;
+        } else {
+            LuhnSum += digit;
+        }
+    }
+
+    let lastDigit = (10 - (LuhnSum % 10)) % 10;
+
+    if (lastDigit < 0 || lastDigit > 9) {
+        return makeCCNumber(0);
+    } else {
+        newCC.push(lastDigit);
+        LuhnSum += lastDigit;
+    }
+    if (LuhnSum % 10 !== 0) {
+        return makeCCNumber(0);
+    }
+
+    const newCCNumber = newCC.join("").replace(/(\d{4})/g, "$1-").slice(0, -1);
+    outputParagraph.innerHTML = newCCNumber;
+
+    let cardType = '';
+
+    if (ccType === 4) {
+        cardType = 'visa';
+    } else if (ccType >= 51 && ccType <= 55) {
+        cardType = 'mastercard';
+    } else if (ccType === 34 || ccType === 37) {
+        cardType = 'amex';
+    } else if (ccType === 6011 || ccType === 644) {
+        cardType = 'discover';
+    }
+
+    updateCardBrandImage(cardType);
+
+    console.log("Generated credit card number: " + newCCNumber);
+    console.log("Luhn sum:", LuhnSum);
+    console.log("Generated CC:", newCC);
+    return newCCNumber;
 }
