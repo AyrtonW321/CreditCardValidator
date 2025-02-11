@@ -114,7 +114,24 @@ function checkCCDetails(ccNumber: number[]) {
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     }
 
-    updateCardBrandImage(cardType);
+    let bankType = '';
+    
+    const bankTypeDropdown = document.getElementById("bankNameType") as HTMLSelectElement;
+    const selectedBank = bankTypeDropdown.value;
+
+    if (selectedBank === 'td') {
+        bankType = 'td';
+    } else if (selectedBank === 'rbc') {
+        bankType = 'rbc';
+    } else if (selectedBank === 'bmo') {
+        bankType = 'bmo';
+    } else if (selectedBank === 'scotia') {
+        bankType = 'scotia';
+    } else if (selectedBank === 'cibc') {
+        bankType = 'cibc';
+    }
+
+    updateImgs(cardType, bankType);
 
     outputParagraph.innerHTML += "7 digits regarding your bank account number: " + first7To15Digits.join("") + "<br>";
 
@@ -149,8 +166,10 @@ function generateCCNumber() {
     makeCCNumber(prefix);
 }
 
-function updateCardBrandImage(cardType: string) {
+
+function updateImgs(cardType: string, bankType: string): void {
     const cardBrandImg = document.getElementById('card-brand') as HTMLImageElement;
+    const bankBrandImg = document.getElementById('bank-brand') as HTMLImageElement;
 
     if (cardType !== '') {
         cardBrandImg.src = `../imgs/${cardType}.png`;
@@ -158,6 +177,14 @@ function updateCardBrandImage(cardType: string) {
     } else {
         cardBrandImg.src = '';
         cardBrandImg.alt = '';
+    }
+
+    if (bankType !== '') {
+        bankBrandImg.src = `../imgs/${bankType}.png`;
+        bankBrandImg.alt = `${bankType} Bank`;
+    } else {
+        bankBrandImg.src = '';
+        bankBrandImg.alt = '';
     }
 }
 
@@ -208,6 +235,10 @@ function makeCCNumber(ccType: number) {
     outputParagraph.innerHTML = newCCNumber;
 
     let cardType = '';
+    let bankType = '';
+    
+    const bankTypeDropdown = document.getElementById("bankNameType") as HTMLSelectElement;
+    const selectedBank = bankTypeDropdown.value;
 
     if (ccType === 4) {
         cardType = 'visa';
@@ -219,7 +250,19 @@ function makeCCNumber(ccType: number) {
         cardType = 'discover';
     }
 
-    updateCardBrandImage(cardType);
+    if (selectedBank === 'td') {
+        bankType = 'td';
+    } else if (selectedBank === 'rbc') {
+        bankType = 'rbc';
+    } else if (selectedBank === 'bmo') {
+        bankType = 'bmo';
+    } else if (selectedBank === 'scotia') {
+        bankType = 'scotia';
+    } else if (selectedBank === 'cibc') {
+        bankType = 'cibc';
+    }
+
+    updateImgs(cardType, bankType);
     randomDateName();
 
     console.log("Generated credit card number: " + newCCNumber);

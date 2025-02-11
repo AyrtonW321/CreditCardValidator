@@ -98,7 +98,25 @@ function checkCCDetails(ccNumber) {
         first6Digits[2] === 4) {
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     }
-    updateCardBrandImage(cardType);
+    let bankType = '';
+    const bankTypeDropdown = document.getElementById("bankNameType");
+    const selectedBank = bankTypeDropdown.value;
+    if (selectedBank === 'td') {
+        bankType = 'td';
+    }
+    else if (selectedBank === 'rbc') {
+        bankType = 'rbc';
+    }
+    else if (selectedBank === 'bmo') {
+        bankType = 'bmo';
+    }
+    else if (selectedBank === 'scotia') {
+        bankType = 'scotia';
+    }
+    else if (selectedBank === 'cibc') {
+        bankType = 'cibc';
+    }
+    updateImgs(cardType, bankType);
     outputParagraph.innerHTML += "7 digits regarding your bank account number: " + first7To15Digits.join("") + "<br>";
     infoContainer.style.display = "block";
 }
@@ -126,8 +144,9 @@ function generateCCNumber() {
     }
     makeCCNumber(prefix);
 }
-function updateCardBrandImage(cardType) {
+function updateImgs(cardType, bankType) {
     const cardBrandImg = document.getElementById('card-brand');
+    const bankBrandImg = document.getElementById('bank-brand');
     if (cardType !== '') {
         cardBrandImg.src = `../imgs/${cardType}.png`;
         cardBrandImg.alt = `${cardType} Card`;
@@ -135,6 +154,14 @@ function updateCardBrandImage(cardType) {
     else {
         cardBrandImg.src = '';
         cardBrandImg.alt = '';
+    }
+    if (bankType !== '') {
+        bankBrandImg.src = `../imgs/${bankType}.png`;
+        bankBrandImg.alt = `${bankType} Bank`;
+    }
+    else {
+        bankBrandImg.src = '';
+        bankBrandImg.alt = '';
     }
 }
 function makeCCNumber(ccType) {
@@ -177,6 +204,9 @@ function makeCCNumber(ccType) {
     const newCCNumber = newCC.join("").replace(/(\d{4})/g, "$1-").slice(0, -1);
     outputParagraph.innerHTML = newCCNumber;
     let cardType = '';
+    let bankType = '';
+    const bankTypeDropdown = document.getElementById("bankNameType");
+    const selectedBank = bankTypeDropdown.value;
     if (ccType === 4) {
         cardType = 'visa';
     }
@@ -189,7 +219,22 @@ function makeCCNumber(ccType) {
     else if (ccType === 6011 || ccType === 644) {
         cardType = 'discover';
     }
-    updateCardBrandImage(cardType);
+    if (selectedBank === 'td') {
+        bankType = 'td';
+    }
+    else if (selectedBank === 'rbc') {
+        bankType = 'rbc';
+    }
+    else if (selectedBank === 'bmo') {
+        bankType = 'bmo';
+    }
+    else if (selectedBank === 'scotia') {
+        bankType = 'scotia';
+    }
+    else if (selectedBank === 'cibc') {
+        bankType = 'cibc';
+    }
+    updateImgs(cardType, bankType);
     randomDateName();
     console.log("Generated credit card number: " + newCCNumber);
     console.log("Luhn sum:", LuhnSum);
