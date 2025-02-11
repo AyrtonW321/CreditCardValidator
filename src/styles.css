@@ -5,7 +5,7 @@ body {
     height: 100vh;
     flex-direction: column;
     background-color: #d3cdcd;
-    font-family: Arial, sans-serif;
+    font-family: 'inter', sans-serif;
 }
 
 div {
@@ -59,6 +59,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
+    font-family: 'inter', sans-serif;
 }
 
 button:hover {
@@ -79,12 +80,30 @@ button:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: transform 500ms ease, box-shadow 500ms ease;
+    transition: transform 1000ms ease, box-shadow 1000ms ease;
+    cursor: pointer;
+    perspective: 1000px;
+    transform-style: preserve-3d;
 }
 
 #credit-card:hover{
-    transform: scale(1.05);
+    transform: scale(1.15) rotateY(180deg);
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+#credit-card .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #424242, #1c1c1c);
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
 }
 
 #chip {
@@ -156,6 +175,7 @@ select {
     color: white;
     font-size: 16px;
     transition: 0.3s;
+    font-family: 'inter', sans-serif;
 }
 
 .inputBox input:is(:focus),
