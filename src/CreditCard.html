@@ -15,19 +15,21 @@
         <input type="number" id="txt-cc-number" placeholder="Enter Credit Card Number" />
 
         <div>
-            <button type="button" id="btn-check-cc" onclick="btnCheckCCNumber()">
-                Check Credit Card Number
-            </button>
-            <button type="button" id="btn-make-cc" onclick="generateCCNumber()">
-                Make Credit Card Number
-            </button>            
+            <div>
+                <button type="button" id="btn-check-cc" onclick="btnCheckCCNumber()">
+                    Check Credit Card Number
+                </button>
+                <button type="button" id="btn-make-cc" onclick="generateCCNumber()">
+                    Make Credit Card Number
+                </button>
+            </div>            
             <div class="inputBox">
                 <select id="cardNameType">
+                    <option value="none">Anything</option>
                     <option value="amex">American Express</option>
                     <option value="discover">Discover</option>
                     <option value="mastercard">Mastercard</option>
                     <option value="visa">Visa</option>
-                    <option value="none">Anything</option>
                 </select>
             </div>
             <div class="inputBox">
@@ -50,6 +52,7 @@
     </div>
 
     <div id="credit-card" class="credit-card">
+<<<<<<< HEAD
         <img id="chip" src="../imgs/chip.png" alt="Chip" />
         <img id="bank-brand" src="../imgs/bmo.png" alt="Bank" />
         <img id="card-brand" src="../imgs/amex.png" alt="Card Brand" />
@@ -57,6 +60,23 @@
         <div class="card-details">
             <p id="card-name">***** *****</p>
             <p id="card-expiry">00/00</p>
+=======
+        <div class="card-front">
+            <img id="chip" src="../imgs/chip.png" alt="Chip" />
+            <img id="bank-name" src=".../imgs/td.png" alt="Bank" />
+            <img id="card-brand" src="../imgs/mastercard.png" alt="Card Brand" />
+            <p id="card-number">####-####-####-####</p>
+            <div class="card-details">
+                <p id="card-name">***** *****</p>
+                <p id="card-expiry">00/00</p>
+            </div>
+        </div>
+        <div class="card-back">
+            <div class="security-code">
+                <p>CVV</p>
+                <p id="cvv">***</p>
+            </div>
+>>>>>>> d56827778d82ffea71c8019dd2a67d92478695cb
         </div>
     </div>
 
