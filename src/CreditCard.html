@@ -27,9 +27,19 @@
                     <option value="discover">Discover</option>
                     <option value="mastercard">Mastercard</option>
                     <option value="visa">Visa</option>
-                    <option value="none">None of the Above</option>
+                    <option value="none">Anything</option>
                 </select>
             </div>
+            <div class="inputBox">
+                <select id="bankName">
+                    <option value="bmo">Bank of Montreal</option>
+                    <option value="cibc">CIBC</option>
+                    <option value="mastercard">Royal Bank</option>
+                    <option value="scotiabank">Scotiabank</option>
+                    <option value="td">TD</option>
+                </select>
+            </div>
+
         </div>
 
         <p id="output-number"></p>
@@ -39,15 +49,17 @@
         <p id="info-paragraph"></p>
     </div>
 
-    <div id="credit-card">
+    <div id="credit-card" class="credit-card">
         <img id="chip" src="../imgs/chip.png" alt="Chip" />
+        <img id="bank-name" src=".../imgs/td.png" alt="Bank" />
         <img id="card-brand" src="../imgs/mastercard.png" alt="Card Brand" />
         <p id="card-number">####-####-####-####</p>
         <div class="card-details">
-            <p id="card-name">Ayrton Wong</p>
-            <p id="card-expiry">12/25</p>
+            <p id="card-name">***** *****</p>
+            <p id="card-expiry">00/00</p>
         </div>
     </div>
+
 </body>
 
 <script src="../dist/CreditCard.js"></script>

@@ -112,14 +112,6 @@ function checkCCDetails(ccNumber: number[]) {
         first6Digits[2] === 4
     ) {
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
-    } else if (
-        JSON.stringify(first6Digits) === JSON.stringify([3, 7, 6, 2, 1, 1])
-    ) {
-        outputParagraph.innerHTML +="This is a Singapore Airlines Krisflyer card" + "<br>";
-    } else if (
-        JSON.stringify(first6Digits) === JSON.stringify([5, 2, 9, 9, 6, 2])
-    ) {
-        outputParagraph.innerHTML += "This is a pre-paid MuchMusic Mastercard" + "<br>";
     }
 
     updateCardBrandImage(cardType);
@@ -133,6 +125,7 @@ function generateCCNumber() {
     const cardTypeDropdown = document.getElementById("cardNameType") as HTMLSelectElement;
     const selectedType = cardTypeDropdown.value;
 
+    let randomNumber = Math.floor(Math.random() * 10); 
     let prefix = 0;
 
     switch (selectedType) {
@@ -149,7 +142,7 @@ function generateCCNumber() {
             prefix = Math.random() < 0.5 ? 6011 : 644;
             break;
         default:
-            prefix = 0;
+            prefix = randomNumber;
             break;
     }
 
@@ -163,8 +156,8 @@ function updateCardBrandImage(cardType: string) {
         cardBrandImg.src = `../imgs/${cardType}.png`;
         cardBrandImg.alt = `${cardType} Card`;
     } else {
-        cardBrandImg.src = '../imgs/default.png';
-        cardBrandImg.alt = 'Unknown Card';
+        cardBrandImg.src = '';
+        cardBrandImg.alt = '';
     }
 }
 
@@ -227,9 +220,23 @@ function makeCCNumber(ccType: number) {
     }
 
     updateCardBrandImage(cardType);
+    randomDateName();
 
     console.log("Generated credit card number: " + newCCNumber);
     console.log("Luhn sum:", LuhnSum);
     console.log("Generated CC:", newCC);
     return newCCNumber;
+}
+
+function randomDateName(){
+    const date = document.getElementById("card-expiry") as HTMLInputElement;
+    const nameInput = document.getElementById('card-name') as HTMLInputElement;
+
+    let name = Math.random() < 0.5 ? 'James Lee' : 'Ayrton Wong';
+    nameInput.innerHTML = name;
+
+    let month: number = Math.floor(Math.random() * 12) + 1;
+    let year: number = new Date().getFullYear() + Math.floor(Math.random() * 5) - 1999;
+    let formattedMonth = month < 10 ? "0" + month : month;
+    date.innerHTML = formattedMonth + "/" + year;
 }

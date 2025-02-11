@@ -79,6 +79,12 @@ button:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: transform 500ms ease, box-shadow 500ms ease;
+}
+
+#credit-card:hover{
+    transform: scale(1.05);
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 #chip {
@@ -161,3 +167,6 @@ select {
 .inputBox select {
     width: 96%;
 }
+
+
+
