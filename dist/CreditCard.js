@@ -206,6 +206,7 @@ function makeCCNumber(ccType) {
     let cardType = '';
     let bankType = '';
     const bankTypeDropdown = document.getElementById("bankNameType");
+    const bankTypes = ['td', 'rbc', 'bmo', 'scotia', 'cibc'];
     const selectedBank = bankTypeDropdown.value;
     if (ccType === 4) {
         cardType = 'visa';
@@ -220,19 +221,23 @@ function makeCCNumber(ccType) {
         cardType = 'discover';
     }
     if (selectedBank === 'td') {
-        bankType = 'td';
+        bankType = bankTypes[0];
     }
     else if (selectedBank === 'rbc') {
-        bankType = 'rbc';
+        bankType = bankTypes[1];
     }
     else if (selectedBank === 'bmo') {
-        bankType = 'bmo';
+        bankType = bankTypes[2];
     }
     else if (selectedBank === 'scotia') {
-        bankType = 'scotia';
+        bankType = bankTypes[3];
     }
     else if (selectedBank === 'cibc') {
-        bankType = 'cibc';
+        bankType = bankTypes[4];
+    }
+    else if (selectedBank === 'anything') {
+        let randomBank = Math.floor(Math.random() * 5);
+        bankType = bankTypes[randomBank];
     }
     updateImgs(cardType, bankType);
     randomDateName();
