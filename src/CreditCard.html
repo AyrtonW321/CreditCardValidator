@@ -15,23 +15,26 @@
         <input type="number" id="txt-cc-number" placeholder="Enter Credit Card Number" />
 
         <div>
-            <button type="button" id="btn-check-cc" onclick="btnCheckCCNumber()">
-                Check Credit Card Number
-            </button>
-            <button type="button" id="btn-make-cc" onclick="generateCCNumber()">
-                Make Credit Card Number
-            </button>            
+            <div>
+                <button type="button" id="btn-check-cc" onclick="btnCheckCCNumber()">
+                    Check Credit Card Number
+                </button>
+                <button type="button" id="btn-make-cc" onclick="generateCCNumber()">
+                    Make Credit Card Number
+                </button>
+            </div>            
             <div class="inputBox">
                 <select id="cardNameType">
+                    <option value="none">Anything</option>
                     <option value="amex">American Express</option>
                     <option value="discover">Discover</option>
                     <option value="mastercard">Mastercard</option>
                     <option value="visa">Visa</option>
-                    <option value="none">Anything</option>
                 </select>
             </div>
             <div class="inputBox">
                 <select id="bankNameType">
+                    <option value="anything">Anything</option>
                     <option value="bmo">Bank of Montreal</option>
                     <option value="cibc">CIBC</option>
                     <option value="mastercard">Royal Bank</option>
