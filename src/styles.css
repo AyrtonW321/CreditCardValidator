@@ -82,7 +82,7 @@ button:hover {
 #credit-card {
     width: 350px;
     height: 200px;
-    background: linear-gradient(135deg, #424242, #1c1c1c);
+    background: linear-gradient(135deg, #9a9898, #cec5c5);
     color: white;
     border-radius: 15px;
     padding: 20px;
@@ -114,9 +114,39 @@ button:hover {
     align-items: center;
     border-radius: 15px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(135deg, #424242, #1c1c1c);
+    background: linear-gradient(135deg, #9a9898, #cec5c5);
     backface-visibility: hidden;
     transform: rotateY(180deg);
+}
+
+.stripe {
+    background-color: #2a1d16;
+    height: 22%;
+    left: 0;
+    position: absolute;
+    top: 9%;
+    width: 100%;
+}
+
+.cvc {
+    font-family: Consolas, Courier, monospace;
+    font-size: 11.9px;
+    color: black;
+    opacity: 1;
+    position: absolute;
+    z-index: 2;
+    right: 23%;
+    top: 38%;
+}
+
+.signature {
+    background: repeating-linear-gradient(.1deg, #fff 20%, #fff 40%, #fea 40%, #fea 44%, #fff 44%);
+    height: 18%;
+    left: 5%;
+    position: absolute;
+    top: 35%;
+    z-index: 1;
+    width: 75%;
 }
 
 #chip {

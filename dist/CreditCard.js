@@ -22,6 +22,7 @@ function checkCCNumber(ccNumber) {
     const outputParagraph = document.getElementById("info-paragraph");
     console.log("Checking credit card number:", ccNumber);
     let luhnSum = 0;
+    outputParagraph.innerHTML = "";
     for (let i = 0; i < ccNumber.length; i++) {
         let digit = ccNumber[i];
         if ((ccNumber.length - i) % 2 === 0) {
@@ -47,7 +48,7 @@ function checkCCNumber(ccNumber) {
 function checkCCDetails(ccNumber) {
     const outputParagraph = document.getElementById("info-paragraph");
     const infoContainer = document.getElementById("info-container");
-    outputParagraph.innerHTML = "Info about the credit card number:" + "<br>";
+    outputParagraph.innerHTML += "Info about the credit card number:" + "<br>";
     console.log(ccNumber);
     let cardType = "";
     let firstDigitInfo = [
@@ -101,20 +102,11 @@ function checkCCDetails(ccNumber) {
     let bankType = '';
     const bankTypeDropdown = document.getElementById("bankNameType");
     const selectedBank = bankTypeDropdown.value;
-    if (selectedBank === 'td') {
-        bankType = 'td';
-    }
-    else if (selectedBank === 'rbc') {
-        bankType = 'rbc';
-    }
-    else if (selectedBank === 'bmo') {
-        bankType = 'bmo';
-    }
-    else if (selectedBank === 'scotia') {
-        bankType = 'scotia';
-    }
-    else if (selectedBank === 'cibc') {
-        bankType = 'cibc';
+    const bankTypes = ['td', 'rbc', 'bmo', 'scotia', 'cibc'];
+    for (let i = 0; i < bankTypes.length; i++) {
+        if (selectedBank === bankTypes[i]) {
+            bankType = bankTypes[i];
+        }
     }
     updateImgs(cardType, bankType);
     outputParagraph.innerHTML += "7 digits regarding your bank account number: " + first7To15Digits.join("") + "<br>";
@@ -208,47 +200,47 @@ function makeCCNumber(ccType) {
     const bankTypeDropdown = document.getElementById("bankNameType");
     const bankTypes = ['td', 'rbc', 'bmo', 'scotia', 'cibc'];
     const selectedBank = bankTypeDropdown.value;
+    const cardTypes = ['visa', 'mastercard', 'amex', 'discover'];
+    let randomBank = Math.floor(Math.random() * cardTypes.length);
     if (ccType === 4) {
-        cardType = 'visa';
+        cardType = cardTypes[0];
     }
     else if (ccType >= 51 && ccType <= 55) {
-        cardType = 'mastercard';
+        cardType = cardTypes[1];
     }
     else if (ccType === 34 || ccType === 37) {
-        cardType = 'amex';
+        cardType = cardTypes[2];
     }
     else if (ccType === 6011 || ccType === 644) {
-        cardType = 'discover';
+        cardType = cardTypes[3];
     }
-    if (selectedBank === 'td') {
-        bankType = bankTypes[0];
-    }
-    else if (selectedBank === 'rbc') {
-        bankType = bankTypes[1];
-    }
-    else if (selectedBank === 'bmo') {
-        bankType = bankTypes[2];
-    }
-    else if (selectedBank === 'scotia') {
-        bankType = bankTypes[3];
-    }
-    else if (selectedBank === 'cibc') {
-        bankType = bankTypes[4];
-    }
-    else if (selectedBank === 'anything') {
-        let randomBank = Math.floor(Math.random() * 5);
-        bankType = bankTypes[randomBank];
+    for (let i = 0; i < bankTypes.length; i++) {
+        if (selectedBank === 'anything') {
+            bankType = bankTypes[randomBank];
+        }
+        else if (selectedBank === bankTypes[i]) {
+            bankType = bankTypes[i];
+            break;
+        }
     }
     updateImgs(cardType, bankType);
-    randomDateName();
+    randomDateNameCVC();
     console.log("Generated credit card number: " + newCCNumber);
     console.log("Luhn sum:", LuhnSum);
     console.log("Generated CC:", newCC);
     return newCCNumber;
 }
-function randomDateName() {
+function randomDateNameCVC() {
     const date = document.getElementById("card-expiry");
     const nameInput = document.getElementById('card-name');
+    const cvc = document.getElementById('cvc');
+    let randomCVC = Math.floor(Math.random() * 1000);
+    if (randomCVC < 100) {
+        cvc.innerHTML = "0" + randomCVC;
+    }
+    else {
+        cvc.innerHTML = randomCVC.toString();
+    }
     let name = Math.random() < 0.5 ? 'James Lee' : 'Ayrton Wong';
     nameInput.innerHTML = name;
     let month = Math.floor(Math.random() * 12) + 1;
