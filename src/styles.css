@@ -149,6 +149,14 @@ button:hover {
     width: 75%;
 }
 
+.card-brand-bottom {
+    position: absolute;
+    bottom: 15px; 
+    left: 50%;
+    transform: translateX(-50%);
+    height: 30px;
+}
+
 #chip {
     width: 50px;
     position: absolute;
@@ -201,6 +209,7 @@ button:hover {
     flex-wrap: wrap;
     width: 50%;
     padding-bottom: 15px;
+    font-family: 'inter', sans-serif;
 }
 
 .inputBox:nth-child(2n) {

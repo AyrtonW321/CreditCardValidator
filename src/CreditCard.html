@@ -25,7 +25,7 @@
             </div>            
             <div class="inputBox">
                 <select id="cardNameType">
-                    <option value="none">-</option>
+                    <option value="none">Select a card network</option>
                     <option value="amex">American Express</option>
                     <option value="discover">Discover</option>
                     <option value="mastercard">Mastercard</option>
@@ -34,7 +34,7 @@
             </div>
             <div class="inputBox">
                 <select id="bankNameType">
-                    <option value="anything">-</option>
+                    <option value="anything">Select a bank</option>
                     <option value="bmo">Bank of Montreal</option>
                     <option value="cibc">CIBC</option>
                     <option value="rbc">Royal Bank</option>
@@ -60,12 +60,13 @@
             <p id="card-name">***** *****</p>
             <p id="card-expiry">00/00</p>
         </div>
-        <div class="card-back">
+        <div id="card-back" class="card-back">
             <div class="security-code">
                 <p id="cvc" class="cvc">***</p>
                 <div class="stripe"></div>
                 <div class="signature"></div>
             </div>
+            <img id="card-brand-bottom" src="" class="card-brand-bottom" />
         </div>
     </div>
 </body>

@@ -164,14 +164,19 @@ function generateCCNumber() {
 
 function updateImgs(cardType: string, bankType: string): void {
     const cardBrandImg = document.getElementById('card-brand') as HTMLImageElement;
+    const cardBrandImgBack = document.getElementById('card-brand-bottom') as HTMLImageElement;
     const bankBrandImg = document.getElementById('bank-brand') as HTMLImageElement;
+    const cardFront = document.getElementById('credit-card') as HTMLImageElement;
+    const cardBack = document.getElementById('card-back') as HTMLImageElement
 
     if (cardType !== '') {
         cardBrandImg.src = `../imgs/${cardType}.png`;
         cardBrandImg.alt = `${cardType} Card`;
+        cardBrandImgBack.src = `../imgs/${cardType}.png`;
     } else {
         cardBrandImg.src = '';
         cardBrandImg.alt = '';
+        cardBrandImgBack.src = '';
     }
 
     if (bankType !== '') {
@@ -180,6 +185,23 @@ function updateImgs(cardType: string, bankType: string): void {
     } else {
         bankBrandImg.src = '';
         bankBrandImg.alt = '';
+    }
+
+    if (cardType === 'visa') {
+        cardFront.style.background = 'linear-gradient(135deg, #a6a6a6, #1a1f71)';
+        cardBack.style.background = 'linear-gradient(135deg, #a6a6a6, #1a1f71)';
+    } else if (cardType === 'amex') {
+        cardFront.style.background = 'linear-gradient(135deg, #1E3A8A, #A8C0FF)';
+        cardBack.style.background = 'linear-gradient(135deg, #1E3A8A, #A8C0FF)';
+    } else if (cardType === 'discover') {
+        cardFront.style.background = 'linear-gradient(135deg, #333333, #FF9900)';
+        cardBack.style.background = 'linear-gradient(135deg, #333333, #FF9900)';
+    } else if (cardType === 'mastercard') {
+        cardFront.style.background = 'linear-gradient(135deg, #EB001B, #F79C42)';
+        cardBack.style.background = 'linear-gradient(135deg, #EB001B, #F79C42)';
+    } else {
+        cardFront.style.background = 'linear-gradient(135deg, #9a9898, #cec5c5)';
+        cardBack.style.background = 'linear-gradient(135deg, #9a9898, #cec5c5)';
     }
 }
 
