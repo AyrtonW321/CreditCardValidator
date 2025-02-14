@@ -20,11 +20,12 @@ function btnCheckCCNumber() {
 
 function checkCCNumber(ccNumber: number[]): boolean {
     const outputParagraph = document.getElementById("info-paragraph") as HTMLInputElement;
-
-    console.log("Checking credit card number:", ccNumber);
-    let luhnSum: number = 0;
     outputParagraph.innerHTML = "";
 
+    console.log("Checking credit card number:", ccNumber);
+
+    let luhnSum: number = 0;
+    
     for (let i = 0; i < ccNumber.length; i++) {
         let digit: number = ccNumber[i];
         if ((ccNumber.length - i) % 2 === 0) {
@@ -35,7 +36,9 @@ function checkCCNumber(ccNumber: number[]): boolean {
         }
         luhnSum += digit;
     }
+
     console.log("Luhn sum:", luhnSum);
+    
     if (luhnSum % 10 === 0) {
         console.log("Valid credit card number");
         outputParagraph.innerHTML += "Valid credit card number" + "<br>";
@@ -50,76 +53,67 @@ function checkCCNumber(ccNumber: number[]): boolean {
 function checkCCDetails(ccNumber: number[]) {
     const outputParagraph = document.getElementById("info-paragraph") as HTMLParagraphElement;
     const infoContainer = document.getElementById("info-container") as HTMLDivElement;
+    const bankTypeDropdown = document.getElementById("bankNameType") as HTMLSelectElement;
+    const selectedBank = bankTypeDropdown.value;
     
-    outputParagraph.innerHTML += "Info about the credit card number:" + "<br>";
-
-    console.log(ccNumber);
-
-    let cardType: string = "";
-
-    let firstDigitInfo: string[] = [
-        "Airlines",
-        "Airlines",
-        "Travel and Entertainment",
-        "Banking and Financial",
-        "Banking and Financial",
-        "Merchandising and Banking",
-        "Petroleum",
-        "Healthcare and Telecommunications",
-        "National Assignment",
-    ];
+    const firstDigitInfo: string[] = [
+        "Airlines", "Airlines",
+        "Travel and Entertainment", "Banking and Financial",
+        "Banking and Financial", "Merchandising and Banking",
+        "Petroleum", "Healthcare and Telecommunications",
+        "National Assignment"];
+    const bankTypes: string[] = ['td', 'rbc', 'bmo', 'scotia', 'cibc'];
 
     let firstDigit: number = ccNumber[0];
-
-    let first6Digits: number[] = ccNumber.slice(0, 6);
-
+    let first4Digits: number[] = ccNumber.slice(0, 4);
     let first7To15Digits: number[] = ccNumber.slice(6, 15);
 
+    console.log(ccNumber);
     console.log("First digit:", firstDigit);
-    console.log("First 6 digits:", first6Digits);
+    console.log("First 4 digits:", first4Digits);
     console.log("Digits 7-15:", first7To15Digits);
 
+    outputParagraph.innerHTML += "Info about the credit card number:" + "<br>";
     outputParagraph.innerHTML += "This card was issued for the " + firstDigitInfo[firstDigit - 1] + " industry" + "<br>";
+    outputParagraph.innerHTML += "7 digits regarding your bank account number: " + first7To15Digits.join("") + "<br>";
+    
+    let cardType: string = "";
+    let bankType: string = '';
 
-    if (first6Digits[0] === 4) {
+    if (first4Digits[0] === 4) {
         cardType = "visa";
         outputParagraph.innerHTML += "This is a Visa card" + "<br>";
     } else if (
-        first6Digits[0] === 5 &&
-        first6Digits[1] >= 1 &&
-        first6Digits[1] <= 5
+        first4Digits[0] === 5 &&
+        first4Digits[1] >= 1 &&
+        first4Digits[1] <= 5
     ) {
         cardType = "mastercard";
         outputParagraph.innerHTML += "This is a MasterCard" + "<br>";
     } else if (
-        first6Digits[0] === 3 &&
-        (first6Digits[1] === 4 || first6Digits[1] === 7)
+        first4Digits[0] === 3 &&
+        (first4Digits[1] === 4 || first4Digits[1] === 7)
     ) {
         cardType = "amex";
         outputParagraph.innerHTML += "This is an American Express card" + "<br>";
-    } else if (first6Digits[0] === 6 && first6Digits[1] === 5) {
+    } else if (first4Digits[0] === 6 && first4Digits[1] === 5) {
         cardType = "discover";
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     } else if (
-        first6Digits[0] === 6 &&
-        first6Digits[1] === 0 &&
-        first6Digits[2] === 1 &&
-        first6Digits[3] === 1
+        first4Digits[0] === 6 &&
+        first4Digits[1] === 0 &&
+        first4Digits[2] === 1 &&
+        first4Digits[3] === 1
     ) {
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     } else if (
-        first6Digits[0] === 6 &&
-        first6Digits[1] === 4 &&
-        first6Digits[2] === 4
+        first4Digits[0] === 6 &&
+        first4Digits[1] === 4 &&
+        first4Digits[2] === 4
     ) {
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     }
 
-    let bankType = '';
-    
-    const bankTypeDropdown = document.getElementById("bankNameType") as HTMLSelectElement;
-    const selectedBank = bankTypeDropdown.value;
-    const bankTypes: string[] = ['td', 'rbc', 'bmo', 'scotia', 'cibc'];
     for (let i = 0; i < bankTypes.length; i++) {
         if (selectedBank === bankTypes[i]) {
             bankType = bankTypes[i];
@@ -127,9 +121,7 @@ function checkCCDetails(ccNumber: number[]) {
     }
 
     updateImgs(cardType, bankType);
-
-    outputParagraph.innerHTML += "7 digits regarding your bank account number: " + first7To15Digits.join("") + "<br>";
-
+    
     infoContainer.style.display = "block";
 }
 
@@ -187,21 +179,27 @@ function updateImgs(cardType: string, bankType: string): void {
         bankBrandImg.alt = '';
     }
 
-    if (cardType === 'visa') {
-        cardFront.style.background = 'linear-gradient(135deg, #a6a6a6, #1a1f71)';
-        cardBack.style.background = 'linear-gradient(135deg, #a6a6a6, #1a1f71)';
-    } else if (cardType === 'amex') {
-        cardFront.style.background = 'linear-gradient(135deg, #1E3A8A, #A8C0FF)';
-        cardBack.style.background = 'linear-gradient(135deg, #1E3A8A, #A8C0FF)';
-    } else if (cardType === 'discover') {
-        cardFront.style.background = 'linear-gradient(135deg, #333333, #FF9900)';
-        cardBack.style.background = 'linear-gradient(135deg, #333333, #FF9900)';
-    } else if (cardType === 'mastercard') {
-        cardFront.style.background = 'linear-gradient(135deg, #EB001B, #F79C42)';
-        cardBack.style.background = 'linear-gradient(135deg, #EB001B, #F79C42)';
-    } else {
-        cardFront.style.background = 'linear-gradient(135deg, #9a9898, #cec5c5)';
-        cardBack.style.background = 'linear-gradient(135deg, #9a9898, #cec5c5)';
+    switch (cardType) {
+        case "visa":
+            cardFront.style.background = 'linear-gradient(135deg, #a6a6a6, #1a1f71)';
+            cardBack.style.background = 'linear-gradient(135deg, #a6a6a6, #1a1f71)';
+            break;
+        case "mastercard":
+            cardFront.style.background = 'linear-gradient(135deg, #1E3A8A, #A8C0FF)';
+            cardBack.style.background = 'linear-gradient(135deg, #1E3A8A, #A8C0FF)';
+            break;
+        case "amex":
+            cardFront.style.background = 'linear-gradient(135deg, #333333, #FF9900)';
+            cardBack.style.background = 'linear-gradient(135deg, #333333, #FF9900)';
+            break;
+        case "discover":
+            cardFront.style.background = 'linear-gradient(135deg, #F79C42, #EB001B)';
+            cardBack.style.background = 'linear-gradient(135deg, #F79C42, #EB001B)';
+            break;
+        default:
+            cardFront.style.background = 'linear-gradient(135deg, #9a9898, #cec5c5)';
+            cardBack.style.background = 'linear-gradient(135deg, #9a9898, #cec5c5)';
+            break;
     }
 }
 
@@ -244,6 +242,7 @@ function makeCCNumber(ccType: number) {
         newCC.push(lastDigit);
         LuhnSum += lastDigit;
     }
+    
     if (LuhnSum % 10 !== 0) {
         return makeCCNumber(0);
     }
@@ -285,6 +284,7 @@ function makeCCNumber(ccType: number) {
     console.log("Generated credit card number: " + newCCNumber);
     console.log("Luhn sum:", LuhnSum);
     console.log("Generated CC:", newCC);
+    
     return newCCNumber;
 }
 
@@ -300,7 +300,9 @@ function randomDateNameCVC(){
         cvc.innerHTML = randomCVC.toString();
     }
 
-    let name = Math.random() < 0.5 ? 'James Lee' : 'Ayrton Wong';
+    let name: string = '';
+    let randomNumber = Math.random();
+    name = randomNumber < 0.475 ? "James Lee" : randomNumber < 0.95 ? "Ayrton Wong" : "Mr. Hsiung";
     nameInput.innerHTML = name;
 
     let month: number = Math.floor(Math.random() * 12) + 1;
