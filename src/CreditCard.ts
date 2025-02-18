@@ -8,12 +8,12 @@ function btnCheckCCNumber() {
 
     if (inputElement) {
         const CC: number[] = inputElement.value.split("").map(Number);
-        if (CC.length == 16) {
+        if (CC.length == 16 || CC.length == 19) {
             checkCCNumber(CC);
             checkCCDetails(CC);
         } else {
             infoContainer.style.display = "block";
-            outputParagraph.innerHTML += "Please enter a valid 16-digit credit card number.";
+            outputParagraph.innerHTML += "Please enter a valid 16 or 19 digit credit card number.";
         }
     }
 }
