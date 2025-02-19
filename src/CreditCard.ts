@@ -131,19 +131,24 @@ function generateCCNumber() {
 
     let randomNumber = Math.floor(Math.random() * 10); 
     let prefix = 0;
+    let cardLength = 0;
 
     switch (selectedType) {
         case "visa":
             prefix = 4;
+            cardLength = 16;
             break;
         case "mastercard":
             prefix = Math.floor(Math.random() * 5) + 51;
+            cardLength = 16;
             break;
         case "amex":
             prefix = Math.random() < 0.5 ? 34 : 37;
+            cardLength = 19;
             break;
         case "discover":
             prefix = Math.random() < 0.5 ? 6011 : 644;
+            cardLength = 16;
             break;
         default:
             prefix = randomNumber;
@@ -203,7 +208,7 @@ function updateImgs(cardType: string, bankType: string): void {
     }
 }
 
-function makeCCNumber(ccType: number) {
+function makeCCNumber(ccType: number, ccLength: number) {
     let newCC: number[] = [];
     let LuhnSum: number = 0;
 
@@ -217,11 +222,11 @@ function makeCCNumber(ccType: number) {
         newCC.push(ccTypeArray[i]);
     }
 
-    for (let i = ccTypeArray.length; i < 15; i++) {
+    for (let i = ccTypeArray.length; i < ccLength-1; i++) {
         newCC.push(Math.floor(Math.random() * 10));
     }
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < ccLength-1; i++) {
         let digit: number = newCC[i];
         if ((14 - i) % 2 === 0) {
             digit *= 2;
@@ -237,14 +242,14 @@ function makeCCNumber(ccType: number) {
     let lastDigit = (10 - (LuhnSum % 10)) % 10;
 
     if (lastDigit < 0 || lastDigit > 9) {
-        return makeCCNumber(0);
+        return makeCCNumber(0, 16);
     } else {
         newCC.push(lastDigit);
         LuhnSum += lastDigit;
     }
     
     if (LuhnSum % 10 !== 0) {
-        return makeCCNumber(0);
+        return makeCCNumber(0, 16);
     }
 
     const newCCNumber = newCC.join("").replace(/(\d{4})/g, "$1-").slice(0, -1);
