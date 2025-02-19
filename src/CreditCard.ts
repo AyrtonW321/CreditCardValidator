@@ -8,12 +8,12 @@ function btnCheckCCNumber() {
 
     if (inputElement) {
         const CC: number[] = inputElement.value.split("").map(Number);
-        if (CC.length == 16 || CC.length == 19) {
+        if (CC.length == 16 || CC.length == 15) {
             checkCCNumber(CC);
             checkCCDetails(CC);
         } else {
             infoContainer.style.display = "block";
-            outputParagraph.innerHTML += "Please enter a valid 16 or 19 digit credit card number.";
+            outputParagraph.innerHTML += "Please enter a valid 16 or 15 digit credit card number.";
         }
     }
 }
@@ -144,7 +144,7 @@ function generateCCNumber() {
             break;
         case "amex":
             prefix = Math.random() < 0.5 ? 34 : 37;
-            cardLength = 19;
+            cardLength = 15;
             break;
         case "discover":
             prefix = Math.random() < 0.5 ? 6011 : 644;
@@ -152,10 +152,11 @@ function generateCCNumber() {
             break;
         default:
             prefix = randomNumber;
+            cardLength = 16;
             break;
     }
 
-    makeCCNumber(prefix);
+    makeCCNumber(prefix, cardLength);
 }
 
 
@@ -252,7 +253,12 @@ function makeCCNumber(ccType: number, ccLength: number) {
         return makeCCNumber(0, 16);
     }
 
-    const newCCNumber = newCC.join("").replace(/(\d{4})/g, "$1-").slice(0, -1);
+    let newCCNumber = '';
+    if (ccLength === 15) {
+        newCCNumber = newCC.join("").replace(/(\d{4})(\d{6})(\d{5})/g, "$1-$2-$3");
+    } else if (ccLength === 16) {
+        newCCNumber = newCC.join("").replace(/(\d{4})/g, "$1-").slice(0, -1);
+    }
     outputParagraph.innerHTML = newCCNumber;
 
     let cardType = '';

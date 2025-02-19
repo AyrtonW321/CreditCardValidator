@@ -8,13 +8,13 @@ function btnCheckCCNumber() {
     infoContainer.style.display = "none";
     if (inputElement) {
         const CC = inputElement.value.split("").map(Number);
-        if (CC.length == 16 || CC.length == 19) {
+        if (CC.length == 16 || CC.length == 15) {
             checkCCNumber(CC);
             checkCCDetails(CC);
         }
         else {
             infoContainer.style.display = "block";
-            outputParagraph.innerHTML += "Please enter a valid 16 or 19 digit credit card number.";
+            outputParagraph.innerHTML += "Please enter a valid 16 or 15 digit credit card number.";
         }
     }
 }
@@ -113,24 +113,30 @@ function generateCCNumber() {
     const selectedType = cardTypeDropdown.value;
     let randomNumber = Math.floor(Math.random() * 10);
     let prefix = 0;
+    let cardLength = 0;
     switch (selectedType) {
         case "visa":
             prefix = 4;
+            cardLength = 16;
             break;
         case "mastercard":
             prefix = Math.floor(Math.random() * 5) + 51;
+            cardLength = 16;
             break;
         case "amex":
             prefix = Math.random() < 0.5 ? 34 : 37;
+            cardLength = 15;
             break;
         case "discover":
             prefix = Math.random() < 0.5 ? 6011 : 644;
+            cardLength = 16;
             break;
         default:
             prefix = randomNumber;
+            cardLength = 16;
             break;
     }
-    makeCCNumber(prefix);
+    makeCCNumber(prefix, cardLength);
 }
 function updateImgs(cardType, bankType) {
     const cardBrandImg = document.getElementById('card-brand');
@@ -179,7 +185,7 @@ function updateImgs(cardType, bankType) {
             break;
     }
 }
-function makeCCNumber(ccType) {
+function makeCCNumber(ccType, ccLength) {
     let newCC = [];
     let LuhnSum = 0;
     const outputParagraph = document.getElementById("card-number");
@@ -189,10 +195,10 @@ function makeCCNumber(ccType) {
     for (let i = 0; i < ccTypeArray.length; i++) {
         newCC.push(ccTypeArray[i]);
     }
-    for (let i = ccTypeArray.length; i < 15; i++) {
+    for (let i = ccTypeArray.length; i < ccLength - 1; i++) {
         newCC.push(Math.floor(Math.random() * 10));
     }
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < ccLength - 1; i++) {
         let digit = newCC[i];
         if ((14 - i) % 2 === 0) {
             digit *= 2;
@@ -207,16 +213,22 @@ function makeCCNumber(ccType) {
     }
     let lastDigit = (10 - (LuhnSum % 10)) % 10;
     if (lastDigit < 0 || lastDigit > 9) {
-        return makeCCNumber(0);
+        return makeCCNumber(0, 16);
     }
     else {
         newCC.push(lastDigit);
         LuhnSum += lastDigit;
     }
     if (LuhnSum % 10 !== 0) {
-        return makeCCNumber(0);
+        return makeCCNumber(0, 16);
     }
-    const newCCNumber = newCC.join("").replace(/(\d{4})/g, "$1-").slice(0, -1);
+    let newCCNumber = '';
+    if (ccLength === 15) {
+        newCCNumber = newCC.join("").replace(/(\d{4})(\d{6})(\d{5})/g, "$1-$2-$3");
+    }
+    else if (ccLength === 16) {
+        newCCNumber = newCC.join("").replace(/(\d{4})/g, "$1-").slice(0, -1);
+    }
     outputParagraph.innerHTML = newCCNumber;
     let cardType = '';
     let bankType = '';
