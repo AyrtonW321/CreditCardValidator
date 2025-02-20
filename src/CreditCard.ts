@@ -50,7 +50,7 @@ function checkCCNumber(ccNumber: number[]): boolean {
     }
 }
 
-function checkCCDetails(ccNumber: number[]) {
+function checkCCDetails(ccNumber: number[]) : void {
     const outputParagraph = document.getElementById("info-paragraph") as HTMLParagraphElement;
     const infoContainer = document.getElementById("info-container") as HTMLDivElement;
     const bankTypeDropdown = document.getElementById("bankNameType") as HTMLSelectElement;
@@ -65,51 +65,51 @@ function checkCCDetails(ccNumber: number[]) {
     const bankTypes: string[] = ['td', 'rbc', 'bmo', 'scotia', 'cibc'];
 
     let firstDigit: number = ccNumber[0];
-    let first6Digits: number[] = ccNumber.slice(0, 6);
-    let accountNum: number[] = ccNumber.slice(6, ccNumber.length - 1);
+    let first4Digits: number[] = ccNumber.slice(0, 4);
+    let first7To15Digits: number[] = ccNumber.slice(6, 15);
 
     console.log(ccNumber);
     console.log("First digit:", firstDigit);
-    console.log("First 6 digits:", first6Digits);
-    console.log("Account Numbers:", accountNum);
+    console.log("First 4 digits:", first4Digits);
+    console.log("Digits 7-15:", first7To15Digits);
 
     outputParagraph.innerHTML += "Info about the credit card number:" + "<br>";
     outputParagraph.innerHTML += "This card was issued for the " + firstDigitInfo[firstDigit - 1] + " industry" + "<br>";
-    outputParagraph.innerHTML += "Digits regarding your bank account number: " + accountNum.join("") + "<br>";
+    outputParagraph.innerHTML += "7 digits regarding your bank account number: " + first7To15Digits.join("") + "<br>";
     
     let cardType: string = "";
     let bankType: string = '';
 
-    if (first6Digits[0] === 4) {
+    if (first4Digits[0] === 4) {
         cardType = "visa";
         outputParagraph.innerHTML += "This is a Visa card" + "<br>";
     } else if (
-        first6Digits[0] === 5 &&
-        first6Digits[1] >= 1 &&
-        first6Digits[1] <= 5
+        first4Digits[0] === 5 &&
+        first4Digits[1] >= 1 &&
+        first4Digits[1] <= 5
     ) {
         cardType = "mastercard";
         outputParagraph.innerHTML += "This is a MasterCard" + "<br>";
     } else if (
-        first6Digits[0] === 3 &&
-        (first6Digits[1] === 4 || first6Digits[1] === 7)
+        first4Digits[0] === 3 &&
+        (first4Digits[1] === 4 || first4Digits[1] === 7)
     ) {
         cardType = "amex";
         outputParagraph.innerHTML += "This is an American Express card" + "<br>";
-    } else if (first6Digits[0] === 6 && first6Digits[1] === 5) {
+    } else if (first4Digits[0] === 6 && first4Digits[1] === 5) {
         cardType = "discover";
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     } else if (
-        first6Digits[0] === 6 &&
-        first6Digits[1] === 0 &&
-        first6Digits[2] === 1 &&
-        first6Digits[3] === 1
+        first4Digits[0] === 6 &&
+        first4Digits[1] === 0 &&
+        first4Digits[2] === 1 &&
+        first4Digits[3] === 1
     ) {
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     } else if (
-        first6Digits[0] === 6 &&
-        first6Digits[1] === 4 &&
-        first6Digits[2] === 4
+        first4Digits[0] === 6 &&
+        first4Digits[1] === 4 &&
+        first4Digits[2] === 4
     ) {
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     }
@@ -125,7 +125,7 @@ function checkCCDetails(ccNumber: number[]) {
     infoContainer.style.display = "block";
 }
 
-function generateCCNumber() {
+function generateCCNumber() : void {
     const cardTypeDropdown = document.getElementById("cardNameType") as HTMLSelectElement;
     const selectedType = cardTypeDropdown.value;
 
@@ -209,7 +209,7 @@ function updateImgs(cardType: string, bankType: string): void {
     }
 }
 
-function makeCCNumber(ccType: number, ccLength: number) {
+function makeCCNumber(ccType: number, ccLength: number) : string {
     let newCC: number[] = [];
     let LuhnSum: number = 0;
 
@@ -299,7 +299,7 @@ function makeCCNumber(ccType: number, ccLength: number) {
     return newCCNumber;
 }
 
-function randomDateNameCVC(){
+function randomDateNameCVC() : void {
     const date = document.getElementById("card-expiry") as HTMLInputElement;
     const nameInput = document.getElementById('card-name') as HTMLInputElement;
     const cvc = document.getElementById('cvc') as HTMLInputElement;
