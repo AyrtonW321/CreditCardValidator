@@ -8,7 +8,7 @@ function btnCheckCCNumber() {
 
     if (inputElement) {
         const CC: number[] = inputElement.value.split("").map(Number);
-        if (CC.length <= 8 && CC.length >= 19) {
+        if (CC.length >= 8 && CC.length <= 19) {
             checkCCNumber(CC);
             checkCCDetails(CC);
         } else {

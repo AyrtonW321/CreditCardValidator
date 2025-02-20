@@ -8,13 +8,13 @@ function btnCheckCCNumber() {
     infoContainer.style.display = "none";
     if (inputElement) {
         const CC = inputElement.value.split("").map(Number);
-        if (CC.length == 16 || CC.length == 15) {
+        if (CC.length >= 8 && CC.length <= 19) {
             checkCCNumber(CC);
             checkCCDetails(CC);
         }
         else {
             infoContainer.style.display = "block";
-            outputParagraph.innerHTML += "Please enter a valid 16 or 15 digit credit card number.";
+            outputParagraph.innerHTML += "Please enter a valid credit card number (8 to 19 digits).";
         }
     }
 }
@@ -59,45 +59,45 @@ function checkCCDetails(ccNumber) {
     ];
     const bankTypes = ['td', 'rbc', 'bmo', 'scotia', 'cibc'];
     let firstDigit = ccNumber[0];
-    let first4Digits = ccNumber.slice(0, 4);
-    let first7To15Digits = ccNumber.slice(6, 15);
+    let first6Digits = ccNumber.slice(0, 6);
+    let accountNum = ccNumber.slice(6, ccNumber.length - 1);
     console.log(ccNumber);
     console.log("First digit:", firstDigit);
-    console.log("First 4 digits:", first4Digits);
-    console.log("Digits 7-15:", first7To15Digits);
+    console.log("First 6 digits:", first6Digits);
+    console.log("Account Numbers:", accountNum);
     outputParagraph.innerHTML += "Info about the credit card number:" + "<br>";
     outputParagraph.innerHTML += "This card was issued for the " + firstDigitInfo[firstDigit - 1] + " industry" + "<br>";
-    outputParagraph.innerHTML += "7 digits regarding your bank account number: " + first7To15Digits.join("") + "<br>";
+    outputParagraph.innerHTML += "Digits regarding your bank account number: " + accountNum.join("") + "<br>";
     let cardType = "";
     let bankType = '';
-    if (first4Digits[0] === 4) {
+    if (first6Digits[0] === 4) {
         cardType = "visa";
         outputParagraph.innerHTML += "This is a Visa card" + "<br>";
     }
-    else if (first4Digits[0] === 5 &&
-        first4Digits[1] >= 1 &&
-        first4Digits[1] <= 5) {
+    else if (first6Digits[0] === 5 &&
+        first6Digits[1] >= 1 &&
+        first6Digits[1] <= 5) {
         cardType = "mastercard";
         outputParagraph.innerHTML += "This is a MasterCard" + "<br>";
     }
-    else if (first4Digits[0] === 3 &&
-        (first4Digits[1] === 4 || first4Digits[1] === 7)) {
+    else if (first6Digits[0] === 3 &&
+        (first6Digits[1] === 4 || first6Digits[1] === 7)) {
         cardType = "amex";
         outputParagraph.innerHTML += "This is an American Express card" + "<br>";
     }
-    else if (first4Digits[0] === 6 && first4Digits[1] === 5) {
+    else if (first6Digits[0] === 6 && first6Digits[1] === 5) {
         cardType = "discover";
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     }
-    else if (first4Digits[0] === 6 &&
-        first4Digits[1] === 0 &&
-        first4Digits[2] === 1 &&
-        first4Digits[3] === 1) {
+    else if (first6Digits[0] === 6 &&
+        first6Digits[1] === 0 &&
+        first6Digits[2] === 1 &&
+        first6Digits[3] === 1) {
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     }
-    else if (first4Digits[0] === 6 &&
-        first4Digits[1] === 4 &&
-        first4Digits[2] === 4) {
+    else if (first6Digits[0] === 6 &&
+        first6Digits[1] === 4 &&
+        first6Digits[2] === 4) {
         outputParagraph.innerHTML += "This is a Discover card" + "<br>";
     }
     for (let i = 0; i < bankTypes.length; i++) {
