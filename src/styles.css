@@ -157,6 +157,50 @@ button:hover {
     height: 30px;
 }
 
+.inputBox {
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    padding-bottom: 15px;
+    font-family: 'inter', sans-serif;
+}
+
+.inputBox:nth-child(2n) {
+    justify-content: end;
+}
+
+.inputBox label {
+    width: 95%;
+    color: black;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.inputBox input,
+select {
+    height: 40px;
+    width: 90%;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    transition: 0.3s;
+    font-family: 'inter', sans-serif;
+}
+
+.inputBox input:is(:focus),
+.inputBox select:is(:hover) {
+    background-color: #0056b3;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.inputBox select {
+    width: 96%;
+}
+
 #chip {
     width: 50px;
     position: absolute;
@@ -203,50 +247,3 @@ button:hover {
     text-transform: uppercase;
     font-family: 'OCR A Std', monospace;
 }
-
-.inputBox {
-    display: flex;
-    flex-wrap: wrap;
-    width: 50%;
-    padding-bottom: 15px;
-    font-family: 'inter', sans-serif;
-}
-
-.inputBox:nth-child(2n) {
-    justify-content: end;
-}
-
-.inputBox label {
-    width: 95%;
-    color: black;
-    font-weight: bold;
-    margin: 5px 0;
-}
-
-.inputBox input,
-select {
-    height: 40px;
-    width: 90%;
-    padding: 0 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    outline: none;
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    transition: 0.3s;
-    font-family: 'inter', sans-serif;
-}
-
-.inputBox input:is(:focus),
-.inputBox select:is(:hover) {
-    background-color: #0056b3;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-.inputBox select {
-    width: 96%;
-}
-
-
-
