@@ -88,31 +88,85 @@ function checkCCDetails(ccNumber) {
 }
 function generateCCNumber() {
     const cardTypeDropdown = document.getElementById("cardNameType");
-    const selectedType = cardTypeDropdown.value;
-    let randomNumber = Math.floor(Math.random() * 10);
+    const industryTypeDropdown = document.getElementById("industryType");
+    const bankTypeDropdown = document.getElementById("bankNameType");
+    const selectedCardType = cardTypeDropdown.value;
+    const selectedIndustryType = industryTypeDropdown.value;
+    const selectedBankType = bankTypeDropdown.value;
+    // .classList.remove("hidden");
+    // .classList.add("hidden");
+    // This turns the container visibility off
     let prefix = 0;
     let cardLength = 0;
-    switch (selectedType) {
-        case "visa":
-            prefix = 4;
-            cardLength = 16;
-            break;
-        case "mastercard":
-            prefix = Math.floor(Math.random() * 5) + 51;
-            cardLength = 16;
-            break;
-        case "amex":
-            prefix = Math.random() < 0.5 ? 34 : 37;
-            cardLength = 15;
-            break;
-        case "discover":
-            prefix = Math.random() < 0.5 ? 6011 : 644;
-            cardLength = 16;
-            break;
-        default:
-            prefix = randomNumber;
-            cardLength = 16;
-            break;
+    let selectionCount = 0;
+    if (selectedCardType !== "anything")
+        selectionCount++;
+    if (selectedIndustryType !== "anything")
+        selectionCount++;
+    if (selectedBankType !== "anything")
+        selectionCount++;
+    if (selectionCount > 1) {
+        alert('Please select only one dropdown option at a time.');
+        return;
+    }
+    else if (selectionCount === 0) {
+        alert('Please select a card type, industry, or bank.');
+        return;
+    }
+    if (selectedCardType !== "anything") {
+        switch (selectedCardType) {
+            case "visa":
+                prefix = 4;
+                cardLength = 16;
+                break;
+            case "mastercard":
+                prefix = Math.floor(Math.random() * 5) + 51;
+                cardLength = 16;
+                break;
+            case "amex":
+                prefix = Math.random() < 0.5 ? 34 : 37;
+                cardLength = 15;
+                break;
+            case "discover":
+                prefix = Math.random() < 0.5 ? 6011 : 644;
+                cardLength = 16;
+                break;
+        }
+    }
+    else if (selectedIndustryType != "anything") {
+        switch (selectedIndustryType) {
+            case "air":
+                prefix = Math.random() < 0.5 ? 1 : 2;
+                cardLength = 16;
+                break;
+            case "travel":
+                prefix = 3;
+                cardLength = 16;
+                break;
+            case "banking":
+                prefix = Math.random() < 0.5 ? 4 : 5;
+                cardLength = 16;
+                break;
+            case "merch":
+                prefix = 6;
+                cardLength = 16;
+                break;
+            case "petrol":
+                prefix = 7;
+                cardLength = 16;
+                break;
+            case "tele":
+                prefix = 8;
+                cardLength = 16;
+                break;
+            case "national":
+                prefix = 9;
+                cardLength = 16;
+                break;
+        }
+    }
+    else if (selectedBankType != "anything") {
+        alert('Bank type is not implemented yet.'); //ADD THIS
     }
     makeCCNumber(prefix, cardLength);
 }

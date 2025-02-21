@@ -12,6 +12,10 @@ div {
     text-align: center;
 }
 
+.hidden {
+    display: none;
+}
+
 #txt-cc-number {
     width: 300px;
     padding: 10px;
@@ -198,7 +202,7 @@ select {
 }
 
 .inputBox select {
-    width: 96%;
+    width: 100%;
 }
 
 #chip {
