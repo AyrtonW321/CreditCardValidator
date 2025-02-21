@@ -1,4 +1,4 @@
-function btnCheckCCNumber() {
+function btnCheckCCNumber() : void {
     const inputElement = document.getElementById("txt-cc-number") as HTMLInputElement;
     const outputParagraph = document.getElementById("info-paragraph") as HTMLInputElement;
     const infoContainer = document.getElementById("info-container") as HTMLDivElement;
@@ -50,7 +50,7 @@ function checkCCNumber(ccNumber: number[]): boolean {
     }
 }
 
-function checkCCDetails(ccNumber: number[]) {
+function checkCCDetails(ccNumber: number[]) : void {
     const outputParagraph = document.getElementById("info-paragraph") as HTMLParagraphElement;
     const infoContainer = document.getElementById("info-container") as HTMLDivElement;
     const bankTypeDropdown = document.getElementById("bankNameType") as HTMLSelectElement;
@@ -125,7 +125,7 @@ function checkCCDetails(ccNumber: number[]) {
     infoContainer.style.display = "block";
 }
 
-function generateCCNumber() {
+function generateCCNumber() : void {
     const cardTypeDropdown = document.getElementById("cardNameType") as HTMLSelectElement;
     const selectedType = cardTypeDropdown.value;
 
@@ -158,7 +158,6 @@ function generateCCNumber() {
 
     makeCCNumber(prefix, cardLength);
 }
-
 
 function updateImgs(cardType: string, bankType: string): void {
     const cardBrandImg = document.getElementById('card-brand') as HTMLImageElement;
@@ -209,7 +208,7 @@ function updateImgs(cardType: string, bankType: string): void {
     }
 }
 
-function makeCCNumber(ccType: number, ccLength: number) {
+function makeCCNumber(ccType: number, ccLength: number) : string {
     let newCC: number[] = [];
     let LuhnSum: number = 0;
 
@@ -299,7 +298,7 @@ function makeCCNumber(ccType: number, ccLength: number) {
     return newCCNumber;
 }
 
-function randomDateNameCVC(){
+function randomDateNameCVC() : void {
     const date = document.getElementById("card-expiry") as HTMLInputElement;
     const nameInput = document.getElementById('card-name') as HTMLInputElement;
     const cvc = document.getElementById('cvc') as HTMLInputElement;
