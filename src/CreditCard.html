@@ -1,6 +1,8 @@
+<!-- Sets document to HTML if not already, and language to english-->
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- Defines the head section of the HTML document, includes character set, viewport settings, and title-->
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,12 +12,11 @@
 </head>
 
 <body>
-    <h1>Credit Card Generator</h1>
-    <div class="container">
-        <input type="number" id="txt-cc-number" placeholder="Enter Credit Card Number" />
-
+    <h1>Credit Card Generator</h1> <!-- Title of the page-->
+    <div class="container"> <!-- Container for the credit card number input and buttons-->
+        <input type="number" id="txt-cc-number" placeholder="Enter Credit Card Number" /> <!-- Input field for the credit card number-->
         <div>
-            <div>
+            <div> <!-- Div for buttons to generate or check a card-->
                 <button type="button" id="btn-check-cc" onclick="btnCheckCCNumber()">
                     Check Credit Card Number
                 </button>
@@ -23,10 +24,10 @@
                     Make Credit Card Number
                 </button>
             </div>
-            <div>
+            <div> <!-- Dropdowns to let the user select a card carrier, bank or industry to generate a card for-->
                 <div class="inputBoxContainer">
                     <div class="inputBox">
-                        <select id="cardNameType">
+                        <select id="cardNameType"> <!-- Dropdown for card carrier-->
                             <option value="anything">Select a card network</option>
                             <option value="amex">American Express</option>
                             <option value="discover">Discover</option>
@@ -34,7 +35,7 @@
                             <option value="visa">Visa</option>
                         </select>
                     </div>
-                    <div class="inputBox">
+                    <div class="inputBox"> <!-- Dropdown for bank-->
                         <select id="bankNameType">
                             <option value="anything">Select a bank</option>
                             <option value="bmo">Bank of Montreal</option>
@@ -44,7 +45,7 @@
                             <option value="td">TD</option>
                         </select>
                     </div>
-                    <div class="inputBox">
+                    <div class="inputBox">  <!-- Dropdown for industry-->
                         <select id="industryType">
                             <option value="anything">Select an industry</option>
                             <option value="air">Airlines</option>
@@ -63,11 +64,14 @@
         <p id="output-number"></p>
     </div>
 
+    <!-- Container for the credit card image, card details, and security code-->
     <div class="info-container" id="info-container">
         <p id="info-paragraph"></p>
     </div>
 
+    <!-- Credit card image container with image, card details, and security code-->
     <div id="credit-card" class="credit-card">
+        <!-- Credit card front with card image and card details-->
         <img id="chip" src="../imgs/chip.png" alt="Chip" />
         <img id="bank-brand" src="" />
         <img id="card-brand" src="" />
@@ -76,6 +80,7 @@
             <p id="card-name">***** *****</p>
             <p id="card-expiry">00/00</p>
         </div>
+        <!-- Card back with security code and signature-->
         <div id="card-back" class="card-back">
             <div class="security-code">
                 <p id="cvc" class="cvc">***</p>
@@ -87,6 +92,7 @@
     </div>
 </body>
 
+<!-- Link to the JavaScript file-->
 <script src="../dist/CreditCard.js"></script>
 
 </html>
