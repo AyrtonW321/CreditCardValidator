@@ -4,22 +4,30 @@ function btnCheckCCNumber() : void {
     const inputElement = document.getElementById("txt-cc-number") as HTMLInputElement;
     const outputParagraph = document.getElementById("info-paragraph") as HTMLInputElement;
     const infoContainer = document.getElementById("info-container") as HTMLDivElement;
-
+    
     // clear the output paragraph and hide the info container
     outputParagraph.innerHTML = "";
     infoContainer.style.display = "none";
 
-    // if the input element exists, split the input value into an array of numbers
-    if (inputElement) {
-        const CC: number[] = inputElement.value.split("").map(Number);
-        // check if the credit card number is valid and display the results, if not valid, display an error
-        if (CC.length >= 8 && CC.length <= 19) {
-            checkCCNumber(CC);
-            checkCCDetails(CC);
-        } else {
-            infoContainer.style.display = "block";
-            outputParagraph.innerHTML += "Please enter a valid credit card number (8 to 19 digits).";
-        }
+    // trim the inputted credit card number
+    const creditCardNumber = inputElement.value.trim();
+
+    // check if the credit card number length is valid, if not, display an error message and return
+    if (creditCardNumber.length < 8 || creditCardNumber.length > 19) {
+        infoContainer.style.display = "block";
+        outputParagraph.innerHTML = "Please enter a valid credit card number (8 to 19 digits).";
+        return;
+    }
+
+    // convert the credit card number to an array of numbers
+    const CC: number[] = Array.from(creditCardNumber, Number);
+
+    // check if the credit card number is valid, if so, check the credit card details, if not, display an error message
+    if (checkCCNumber(CC)) {
+        checkCCDetails(CC);
+    } else {
+        infoContainer.style.display = "block";
+        outputParagraph.innerHTML = "Please enter a valid credit card number.";
     }
 }
 
@@ -30,7 +38,7 @@ function checkCCNumber(ccNumber: number[]): boolean {
     outputParagraph.innerHTML = "";
     // log the credit card number to the console
     console.log("Checking credit card number:", ccNumber);
-    // set the luhn sum to 0
+    // set luhn sum to 0
     let luhnSum: number = 0;
     // iterate through the credit card number array, adds the numbers together, doubles every other number starting from the right
     for (let i = 0; i < ccNumber.length; i++) {
@@ -43,18 +51,17 @@ function checkCCNumber(ccNumber: number[]): boolean {
         }
         luhnSum += digit;
     }
-    // log the luhn sum to the console
+
+    // log luhn sum
     console.log("Luhn sum:", luhnSum);
+
     // check if the luhn sum is divisible by 10, if so, the credit card number is valid, if not, it is invalid, displays an error accordingly
-    if (luhnSum % 10 === 0) {
-        console.log("Valid credit card number");
-        outputParagraph.innerHTML += "Valid credit card number" + "<br>";
-        return true;
-    } else {
-        console.log("Invalid credit card number");
-        outputParagraph.innerHTML += "Invalid credit card number" + "<br>";
-        return false;
-    }
+    const isValid = luhnSum % 10 === 0;
+    console.log(isValid ? "Valid credit card number" : "Invalid credit card number");
+    outputParagraph.innerHTML += `${isValid ? "Valid" : "Invalid"} credit card number<br>`;
+
+    // return if the credit card number is valid or not
+    return isValid;
 }
 
 // Function to check the credit card details based on the digits
@@ -77,7 +84,7 @@ function checkCCDetails(ccNumber: number[]): void {
 
     // get the first digit, account number, and the first 6 digits from the credit card number
     const firstDigit = ccNumber[0];
-    const first6Digits = ccNumber.slice(0, 6);
+    const first6Digits = ccNumber.slice(0, 6).join("");
     const accountNum = ccNumber.slice(6, ccNumber.length - 1);
 
     // log the credit card number to the console
@@ -90,7 +97,7 @@ function checkCCDetails(ccNumber: number[]): void {
     outputParagraph.innerHTML = `
         Info about the credit card number:<br>
         This card was issued for the ${firstDigitInfo[firstDigit - 1]} industry<br>
-        Digits regarding your bank account number: ${accountNum.join("")}<br>
+        Digits regarding your bank account number: ${accountNum}<br>
     `;
 
     // check if the selected bank type is valid, if so, display the bank type in the output paragraph
@@ -102,8 +109,8 @@ function checkCCDetails(ccNumber: number[]): void {
     };
 
     // constants for the first 2 and 4 digits of the credit card number
-    const firstTwoDigits = first6Digits.slice(0, 2).join("");
-    const firstFourDigits = first6Digits.slice(0, 4).join("");
+    const firstTwoDigits = first6Digits.slice(0, 2);
+    const firstFourDigits = first6Digits.slice(0, 4);
     
     // check if the credit card number has a valid prefix and display the card type in the output paragraph
     let cardType = cardPrefixes[firstTwoDigits] || cardPrefixes[firstFourDigits] || cardPrefixes[firstDigit.toString()] || "unknown";
@@ -120,40 +127,42 @@ function checkCCDetails(ccNumber: number[]): void {
 }
 
 // passes infomation to generate a valid CC number based on the selected bank, industry or carrier type
-function generateCCNumber() : void {
+function generateCCNumber(): void {
     // constants for the selected bank, industry, and card type dropdowns
     const cardTypeDropdown = document.getElementById("cardNameType") as HTMLSelectElement;
     const industryTypeDropdown = document.getElementById("industryType") as HTMLSelectElement;
     const bankTypeDropdown = document.getElementById("bankNameType") as HTMLSelectElement;
+
+    // variables for the prefix, bank type, and card length requirments
     const selectedCardType = cardTypeDropdown.value;
     const selectedIndustryType = industryTypeDropdown.value;
     const selectedBankType = bankTypeDropdown.value;
 
-    // variables for the prefix, bank type, and card length requirments
-    let prefix: number = 0;
-    let cardLength: number = 0;
-    let bankType : string = '';
-
     // counter for how many drop down menus are selected
-    let selectionCount: number = 0;
+    let selections: number = 0;
     if (selectedCardType !== "anything") {
-        selectionCount++;
+        selections++;
     }
     if (selectedIndustryType !== "anything") {
-        selectionCount++;
+        selections++;
     }
     if (selectedBankType !== "anything") {
-        selectionCount++;
+        selections++;
     }
 
     // check if more than one dropdown option is selected, display an error message and return if so, and ask for user input if no options are selected
-    if (selectionCount > 1) {
+    if (selections > 1) {
         alert('Please select only one dropdown option at a time.');
         return;
-    } else if (selectionCount === 0) {
+    } else if (selections === 0) {
         alert('Please select a card type, industry, or bank.');
         return;
     }
+
+    // variables for the prefix, card length, and bank type 
+    let prefix: number = 0;
+    let cardLength: number = 16;
+    let bankType: string = '';
 
     // takes the users input
     if (selectedCardType !== "anything") {
@@ -161,82 +170,47 @@ function generateCCNumber() : void {
         switch (selectedCardType) {
             case "visa":
                 prefix = 4;
-                cardLength = 16;
                 break;
             case "mastercard":
                 prefix = Math.floor(Math.random() * 5) + 51;
-                cardLength = 16;
                 break;
             case "amex":
                 prefix = Math.random() < 0.5 ? 34 : 37;
                 cardLength = 15;
                 break;
             case "discover":
-                prefix = Math.random() < 0.33 ? 6011 : (Math.random() < 0.5 ? 644 : 65);
-                cardLength = 16;
+                prefix = [6011, 644, 65][Math.floor(Math.random() * 3)];
                 break;
         }
-    } else if (selectedIndustryType != "anything") { // takes the users input
-        // Set the prefix and card length accordingly to selected industry type
+    } else if (selectedIndustryType !== "anything") {
+        // Set the prefix and card length accordingly to selected
         switch (selectedIndustryType) {
             case "air":
                 prefix = Math.random() < 0.5 ? 1 : 2;
-                cardLength = 16;
                 break;
             case "travel":
                 prefix = 3;
-                cardLength = 16;
                 break;
             case "banking":
                 prefix = Math.random() < 0.5 ? 4 : 5;
-                cardLength = 16;
                 break;
             case "merch":
-                prefix = 6;
-                cardLength = 16;
+                prefix = 6
                 break;
             case "petrol":
                 prefix = 7;
-                cardLength = 16;
                 break;
             case "tele":
                 prefix = 8;
-                cardLength = 16;
                 break;
             case "national":
                 prefix = 9;
-                cardLength = 16;
                 break;
         }
-    } else if (selectedBankType !== "anything") { // takes the users input
-        // Set the prefix and card length accordingly to selected
-        switch (selectedBankType) { 
-            case "bmo":
-                prefix = Math.floor(Math.random() * 9) + 1;
-                cardLength = 16;
-                bankType = "bmo";
-                break;
-            case "cibc":
-                prefix = Math.floor(Math.random() * 9) + 1;;
-                cardLength = 16;
-                bankType = "cibc";
-                break;
-            case "rbc":
-                prefix = Math.floor(Math.random() * 9) + 1;;
-                cardLength = 16;
-                bankType = "rbc";
-                break;
-            case "scotia":
-                prefix = Math.floor(Math.random() * 9) + 1;;
-                cardLength = 16;
-                bankType = "scotia";
-                break;
-            case "td":
-                prefix = Math.floor(Math.random() * 9) + 1;;
-                cardLength = 16;
-                bankType = "td";
-                break;
-        }
+    } else if (selectedBankType !== "anything") {
+        // random prefix and bank type
+        prefix = Math.floor(Math.random() * 9) + 1;
+        bankType = selectedBankType;
     }
 
     // generate a random credit card number with the selected prefix and card length
