@@ -4,7 +4,8 @@ body { /* body colour, font and sizing*/
     align-items: center;
     height: 100vh;
     flex-direction: column;
-    background-color: #d3cdcd;
+    color: white;
+    background: rgba(0, 0, 0, 0.9);
     font-family: 'inter', sans-serif;
 }
 
@@ -58,17 +59,12 @@ button { /* button styling */
     padding: 10px;
     font-size: 16px;
     border: none;
-    background-color: #007bff;
-    color: white;
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
     font-family: 'inter', sans-serif;
 }
 
-button:hover { /* button hover styling */
-    background-color: #0056b3;
-}
 .info-container { /* info container styling */
     display: none;
     text-align: center;
@@ -197,7 +193,7 @@ select { /* input box input and select styling */
 
 .inputBox input:is(:focus),
 .inputBox select:is(:hover) { /* input box input and select hover styling */
-    background-color: #0056b3;
+    background-color: #594fd9;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -250,4 +246,25 @@ select { /* input box input and select styling */
     font-size: 20px;
     text-transform: uppercase;
     font-family: 'OCR A Std', monospace;
+}
+
+button, select {
+    background: linear-gradient(135deg, #773fc7, #6a46cf, #594fd9);
+    border-image: linear-gradient(135deg, #773fc7, #6a46cf, #594fd9) 1;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:hover, select:hover {
+    filter: brightness(1.2);
+}
+
+.container, .dropdown-menu {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid;
+    border-image: linear-gradient(135deg, #8a2be2, #1e90ff) 1;
+    box-shadow: 0px 4px 10px rgba(138, 43, 226, 0.8), 0px 4px 10px rgba(30, 144, 255, 0.8);
 }
