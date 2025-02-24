@@ -1,4 +1,4 @@
-body {
+body { /* body colour, font and sizing*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,15 +8,15 @@ body {
     font-family: 'inter', sans-serif;
 }
 
-div {
+div { /* div styling */
     text-align: center;
 }
 
-.hidden {
+.hidden { /* hidden class */
     display: none;
 }
 
-#txt-cc-number {
+#txt-cc-number { /* credit card number styling */
     width: 300px;
     padding: 10px;
     font-size: 18px;
@@ -25,13 +25,13 @@ div {
     border-radius: 5px;
 }
 
-div > div {
+div > div { /* div styling */
     display: flex;
     justify-content: center;
     gap: 10px;
 }
 
-.container {
+.container { /* container styling */
     border: 2px solid #007bff;
     padding: 20px;
     border-radius: 10px;
@@ -39,7 +39,7 @@ div > div {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.info-container {
+.info-container { /* info container styling */
     display: none;
     text-align: center;
     margin-top: 20px;
@@ -53,7 +53,7 @@ div > div {
     margin-right: auto;
 }
 
-button {
+button { /* button styling */
     width: 145px;
     padding: 10px;
     font-size: 16px;
@@ -66,10 +66,10 @@ button {
     font-family: 'inter', sans-serif;
 }
 
-button:hover {
+button:hover { /* button hover styling */
     background-color: #0056b3;
 }
-.info-container {
+.info-container { /* info container styling */
     display: none;
     text-align: center;
     margin-top: 20px;
@@ -83,7 +83,7 @@ button:hover {
     margin-right: auto;
 }
 
-#credit-card {
+#credit-card { /* credit card styling */
     width: 350px;
     height: 200px;
     background: linear-gradient(135deg, #9a9898, #cec5c5);
@@ -103,12 +103,12 @@ button:hover {
     transform-style: preserve-3d;
 }
 
-#credit-card:hover{
+#credit-card:hover{ /* credit card hover styling */
     transform: scale(1.15) rotateY(180deg);
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-#credit-card .card-back {
+#credit-card .card-back { /* card back styling */
     position: absolute;
     width: 100%;
     height: 100%;
@@ -123,7 +123,7 @@ button:hover {
     transform: rotateY(180deg);
 }
 
-.stripe {
+.stripe { /* stripe styling */
     background-color: #2a1d16;
     height: 22%;
     left: 0;
@@ -132,7 +132,7 @@ button:hover {
     width: 100%;
 }
 
-.cvc {
+.cvc { /* cvc styling */
     font-family: Consolas, Courier, monospace;
     font-size: 11.9px;
     color: black;
@@ -143,7 +143,7 @@ button:hover {
     top: 38%;
 }
 
-.signature {
+.signature { /* signature styling */
     background: repeating-linear-gradient(.1deg, #fff 20%, #fff 40%, #fea 40%, #fea 44%, #fff 44%);
     height: 18%;
     left: 5%;
@@ -153,7 +153,7 @@ button:hover {
     width: 75%;
 }
 
-.card-brand-bottom {
+.card-brand-bottom { /* card brand bottom styling */
     position: absolute;
     bottom: 15px; 
     left: 50%;
@@ -161,7 +161,7 @@ button:hover {
     height: 30px;
 }
 
-.inputBox {
+.inputBox { /* input box styling */
     display: flex;
     flex-wrap: wrap;
     width: 50%;
@@ -169,11 +169,11 @@ button:hover {
     font-family: 'inter', sans-serif;
 }
 
-.inputBox:nth-child(2n) {
+.inputBox:nth-child(2n) { /* input box styling */
     justify-content: end;
 }
 
-.inputBox label {
+.inputBox label { /* input box label styling */
     width: 95%;
     color: black;
     font-weight: bold;
@@ -181,7 +181,7 @@ button:hover {
 }
 
 .inputBox input,
-select {
+select { /* input box input and select styling */
     height: 40px;
     width: 90%;
     padding: 0 10px;
@@ -196,38 +196,38 @@ select {
 }
 
 .inputBox input:is(:focus),
-.inputBox select:is(:hover) {
+.inputBox select:is(:hover) { /* input box input and select hover styling */
     background-color: #0056b3;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-.inputBox select {
+.inputBox select { /* input box select styling */
     width: 100%;
 }
 
-#chip {
+#chip { /* chip styling */
     width: 50px;
     position: absolute;
     top: 15px;
     left: 20px;
 }
 
-#bank-brand, #card-brand {
+#bank-brand, #card-brand { /* bank brand and card brand styling */
     position: absolute;
     top: 15px;
     height: 30px;
 }
 
-#card-brand {
+#card-brand { /* card brand styling */
     right: 20px;
 }
 
-#bank-brand {
+#bank-brand { /* bank brand styling */
     right: calc(20px + 20%);
     margin-right: 10px;
 }
 
-#card-number {
+#card-number { /* card number styling */
     font-size: 20px;
     letter-spacing: 4px;
     font-family: 'OCR A Std', monospace;
@@ -239,7 +239,7 @@ select {
     white-space: nowrap;
 }
 
-.card-details {
+.card-details { /* card details styling */
     width: 100%;
     position: absolute;
     bottom: 15px;
