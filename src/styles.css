@@ -1,85 +1,91 @@
-body { /* body colour, font and sizing*/
+/* body colour, font and sizing */
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     flex-direction: column;
     color: white;
-    background: rgba(0, 0, 0, 0.9);
-    font-family: 'inter', sans-serif;
+    background: radial-gradient(circle, rgba(0, 0, 0, 1), rgba(50, 46, 92, 1));
+    -webkit-background: radial-gradient(circle, rgba(0, 0, 0, 1), rgba(50, 46, 92, 1));
+    -moz-background: radial-gradient(circle, rgba(0, 0, 0, 1), rgba(50, 46, 92, 1));
+    font-family: 'Inter', sans-serif;
 }
 
-div { /* div styling */
+/* styling for all divs */
+div {
     text-align: center;
 }
 
-.hidden { /* hidden class */
+/* hidden class */
+.hidden {
     display: none;
 }
 
-#txt-cc-number { /* credit card number styling */
-    width: 300px;
+/* Credit card number styling */
+#txt-cc-number, .inputBox input, .inputBox select {
+    width: 90%;
+    max-width: 300px;
     padding: 10px;
-    font-size: 18px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
+    font-size: 16px;
+    border: 1px;
     border-radius: 5px;
+    outline: none;
+    background-color: white;
+    color: white;
+    transition: 0.3s;
+    margin: 5px;
 }
 
-div > div { /* div styling */
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+#txt-cc-number{
+    color: black;
 }
 
-.container { /* container styling */
-    border: 2px solid #007bff;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+/* change the colour of the dropdown menus when hovering and focused */
+.inputBox input:focus, .inputBox select:hover {
+    background-color: #594fd9;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-.info-container { /* info container styling */
-    display: none;
-    text-align: center;
-    margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.4);
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    width: 80%;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-button { /* button styling */
+/* Button and select styling */
+button, select {
     width: 145px;
     padding: 10px;
     font-size: 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-weight: bold;
     cursor: pointer;
+    background: linear-gradient(135deg, #773fc7, #6a46cf, #594fd9);
+    color: white;
     transition: 0.3s;
-    font-family: 'inter', sans-serif;
 }
 
-.info-container { /* info container styling */
-    display: none;
-    text-align: center;
-    margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.4);
-    padding: 15px;
+/* Change the brightness when hovering */
+button:hover, select:hover {
+    filter: brightness(1.2);
+}
+
+/* Container styling */
+.container, .info-container, .dropdown-menu {
+    background: rgba(255, 255, 255, 0.4);
+    border: 2px solid;
+    border-image: linear-gradient(135deg, #8a2be2, #1e90ff) 1;
+    box-shadow: 0px 4px 10px rgba(138, 43, 226, 0.8), 0px 4px 10px rgba(30, 144, 255, 0.8);
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.info-container {
+    display: none;
     width: 80%;
     max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 20px auto;
 }
 
-#credit-card { /* credit card styling */
+/* Styling for the credit card */
+#credit-card {
     width: 350px;
     height: 200px;
     background: linear-gradient(135deg, #9a9898, #cec5c5);
@@ -93,18 +99,19 @@ button { /* button styling */
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: transform 1000ms ease, box-shadow 1000ms ease;
+    transition: transform 1s ease, box-shadow 1s ease;
     cursor: pointer;
     perspective: 1000px;
     transform-style: preserve-3d;
 }
 
-#credit-card:hover{ /* credit card hover styling */
+#credit-card:hover {
     transform: scale(1.15) rotateY(180deg);
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-#credit-card .card-back { /* card back styling */
+/* Styling for the back of the card */
+#credit-card .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -113,117 +120,79 @@ button { /* button styling */
     justify-content: center;
     align-items: center;
     border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     background: linear-gradient(135deg, #9a9898, #cec5c5);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     backface-visibility: hidden;
     transform: rotateY(180deg);
 }
 
-.stripe { /* stripe styling */
+/* Stripe styling */
+.stripe {
     background-color: #2a1d16;
     height: 22%;
-    left: 0;
+    width: 100%;
     position: absolute;
     top: 9%;
-    width: 100%;
+    left: 0;
 }
 
-.cvc { /* cvc styling */
-    font-family: Consolas, Courier, monospace;
-    font-size: 11.9px;
-    color: black;
-    opacity: 1;
-    position: absolute;
-    z-index: 2;
-    right: 23%;
-    top: 38%;
-}
-
-.signature { /* signature styling */
+/* Styling for signature */
+.signature {
     background: repeating-linear-gradient(.1deg, #fff 20%, #fff 40%, #fea 40%, #fea 44%, #fff 44%);
     height: 18%;
-    left: 5%;
+    width: 75%;
     position: absolute;
     top: 35%;
+    left: 5%;
     z-index: 1;
-    width: 75%;
 }
 
-.card-brand-bottom { /* card brand bottom styling */
+/* Styling for cvc */
+.cvc {
+    font-family: Consolas, Courier, monospace;
+    font-size: 12px;
+    color: black;
     position: absolute;
-    bottom: 15px; 
+    top: 38%;
+    right: 23%;
+    z-index: 2;
+}
+
+/* Styling for card brand */
+.card-brand-bottom {
+    position: absolute;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     height: 30px;
 }
 
-.inputBox { /* input box styling */
-    display: flex;
-    flex-wrap: wrap;
-    width: 50%;
-    padding-bottom: 15px;
-    font-family: 'inter', sans-serif;
-}
-
-.inputBox:nth-child(2n) { /* input box styling */
-    justify-content: end;
-}
-
-.inputBox label { /* input box label styling */
-    width: 95%;
-    color: black;
-    font-weight: bold;
-    margin: 5px 0;
-}
-
-.inputBox input,
-select { /* input box input and select styling */
-    height: 40px;
-    width: 90%;
-    padding: 0 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    outline: none;
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    transition: 0.3s;
-    font-family: 'inter', sans-serif;
-}
-
-.inputBox input:is(:focus),
-.inputBox select:is(:hover) { /* input box input and select hover styling */
-    background-color: #594fd9;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-.inputBox select { /* input box select styling */
-    width: 100%;
-}
-
-#chip { /* chip styling */
+/* Styling for images */
+#chip {
     width: 50px;
     position: absolute;
     top: 15px;
     left: 20px;
 }
 
-#bank-brand, #card-brand { /* bank brand and card brand styling */
+
+#bank-brand, #card-brand {
     position: absolute;
     top: 15px;
     height: 30px;
 }
 
-#card-brand { /* card brand styling */
+#card-brand {
     right: 20px;
 }
 
-#bank-brand { /* bank brand styling */
+#bank-brand {
     right: calc(20px + 20%);
     margin-right: 10px;
 }
 
-#card-number { /* card number styling */
+/* Styling for card number */
+#card-number {
     font-size: 20px;
     letter-spacing: 4px;
     font-family: 'OCR A Std', monospace;
@@ -235,36 +204,15 @@ select { /* input box input and select styling */
     white-space: nowrap;
 }
 
-.card-details { /* card details styling */
+/* Styling for card details */
+.card-details {
     width: 100%;
     position: absolute;
     bottom: 15px;
     left: 0;
     display: flex;
     justify-content: space-around;
-    padding: -40px 40px;
     font-size: 20px;
     text-transform: uppercase;
     font-family: 'OCR A Std', monospace;
-}
-
-button, select {
-    background: linear-gradient(135deg, #773fc7, #6a46cf, #594fd9);
-    border-image: linear-gradient(135deg, #773fc7, #6a46cf, #594fd9) 1;
-    color: white;
-    font-weight: bold;
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-}
-
-button:hover, select:hover {
-    filter: brightness(1.2);
-}
-
-.container, .dropdown-menu {
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid;
-    border-image: linear-gradient(135deg, #8a2be2, #1e90ff) 1;
-    box-shadow: 0px 4px 10px rgba(138, 43, 226, 0.8), 0px 4px 10px rgba(30, 144, 255, 0.8);
 }

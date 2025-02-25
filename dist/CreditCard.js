@@ -1,25 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// Function that takes the input from the text box and passes it to check the credit card number and details
 function btnCheckCCNumber() {
-    // constants for the input element, output paragraph, and info container
-    const inputElement = document.getElementById("txt-cc-number");
     const outputParagraph = document.getElementById("info-paragraph");
     const infoContainer = document.getElementById("info-container");
-    // clear the output paragraph and hide the info container
+    const inputElement = document.getElementById("txt-cc-number");
+    const creditCardNumber = inputElement.value.trim();
     outputParagraph.innerHTML = "";
     infoContainer.style.display = "none";
-    // trim the inputted credit card number
-    const creditCardNumber = inputElement.value.trim();
-    // check if the credit card number length is valid, if not, display an error message and return
     if (creditCardNumber.length < 8 || creditCardNumber.length > 19) {
         infoContainer.style.display = "block";
         outputParagraph.innerHTML = "Please enter a valid credit card number (8 to 19 digits).";
         return;
     }
-    // convert the credit card number to an array of numbers
-    const CC = Array.from(creditCardNumber, Number);
-    // check if the credit card number is valid, if so, check the credit card details, if not, display an error message
+    const CC = creditCardNumber.split('').map(Number);
     if (checkCCNumber(CC)) {
         checkCCDetails(CC);
     }
@@ -28,16 +21,10 @@ function btnCheckCCNumber() {
         outputParagraph.innerHTML = "Please enter a valid credit card number.";
     }
 }
-// Function to check the credit card number based on the luhn algorithm
 function checkCCNumber(ccNumber) {
-    // get the output paragraph element
     const outputParagraph = document.getElementById("info-paragraph");
     outputParagraph.innerHTML = "";
-    // log the credit card number to the console
-    console.log("Checking credit card number:", ccNumber);
-    // set luhn sum to 0
     let luhnSum = 0;
-    // iterate through the credit card number array, adds the numbers together, doubles every other number starting from the right
     for (let i = 0; i < ccNumber.length; i++) {
         let digit = ccNumber[i];
         if ((ccNumber.length - i) % 2 === 0) {
@@ -48,23 +35,18 @@ function checkCCNumber(ccNumber) {
         }
         luhnSum += digit;
     }
-    // log luhn sum
-    console.log("Luhn sum:", luhnSum);
-    // check if the luhn sum is divisible by 10, if so, the credit card number is valid, if not, it is invalid, displays an error accordingly
     const isValid = luhnSum % 10 === 0;
+    console.log("Luhn sum:", luhnSum);
+    console.log("Checking credit card number:", ccNumber);
     console.log(isValid ? "Valid credit card number" : "Invalid credit card number");
     outputParagraph.innerHTML += `${isValid ? "Valid" : "Invalid"} credit card number<br>`;
-    // return if the credit card number is valid or not
     return isValid;
 }
-// Function to check the credit card details based on the digits
 function checkCCDetails(ccNumber) {
-    // constants for the output paragraph and info paragraph
     const outputParagraph = document.getElementById("info-paragraph");
     const infoContainer = document.getElementById("info-container");
     const bankTypeDropdown = document.getElementById("bankNameType");
     const selectedBank = bankTypeDropdown.value;
-    // constants for the first digit info and bank types
     const firstDigitInfo = [
         "Airlines", "Airlines",
         "Travel and Entertainment", "Banking and Financial",
@@ -73,43 +55,36 @@ function checkCCDetails(ccNumber) {
         "National Assignment"
     ];
     const bankTypes = ['td', 'rbc', 'bmo', 'scotia', 'cibc'];
-    // get the first digit, account number, and the first 6 digits from the credit card number
     const firstDigit = ccNumber[0];
     const first6Digits = ccNumber.slice(0, 6).join("");
     const accountNum = ccNumber.slice(6, ccNumber.length - 1);
-    // log the credit card number to the console
     console.log(ccNumber);
     console.log("First digit:", firstDigit);
     console.log("First 6 digits:", first6Digits);
     console.log("Account Numbers:", accountNum);
-    // display the credit card number details in the output paragraph
     outputParagraph.innerHTML = `
         Info about the credit card number:<br>
         This card was issued for the ${firstDigitInfo[firstDigit - 1]} industry<br>
         Digits regarding your bank account number: ${accountNum}<br>
     `;
-    // check if the selected bank type is valid, if so, display the bank type in the output paragraph
+    // Dictionary
     const cardPrefixes = {
         "4": "visa",
         "51": "mastercard", "52": "mastercard", "53": "mastercard", "54": "mastercard", "55": "mastercard",
         "34": "amex", "37": "amex",
         "65": "discover", "6011": "discover", "644": "discover"
     };
-    // constants for the first 2 and 4 digits of the credit card number
     const firstTwoDigits = first6Digits.slice(0, 2);
     const firstFourDigits = first6Digits.slice(0, 4);
-    // check if the credit card number has a valid prefix and display the card type in the output paragraph
     let cardType = cardPrefixes[firstTwoDigits] || cardPrefixes[firstFourDigits] || cardPrefixes[firstDigit.toString()] || "unknown";
     if (cardType !== "unknown") {
         outputParagraph.innerHTML += `This is a ${cardType} card<br>`;
     }
-    // check if the selected bank type is valid, if so, update the background image of the info container
     const bankType = bankTypes.includes(selectedBank) ? selectedBank : '';
     updateImgs(cardType, bankType);
     // display the info container
     infoContainer.style.display = "block";
 }
-// passes infomation to generate a valid CC number based on the selected bank, industry or carrier type
 function generateCCNumber() {
     // constants for the selected bank, industry, and card type dropdowns
     const cardTypeDropdown = document.getElementById("cardNameType");
@@ -196,16 +171,66 @@ function generateCCNumber() {
     // generate a random credit card number with the selected prefix and card length
     makeCCNumber(prefix, cardLength, bankType);
 }
-// updates the images of the credit card and bank based on the card type and bank type
+// Maps banks to their valid card types
+const bankToCards = {
+    "TD": ["visa"],
+    "Scotiabank": ["visa", "mastercard", "amex"],
+    "RBC": ["visa", "mastercard", "amex"],
+    "BMO": ["visa", "mastercard"],
+    "CIBC": ["visa", "mastercard"],
+    "Discover": ["discover"]
+};
+// Maps card types to banks that offer them
+const cardToBanks = {
+    "visa": ["TD", "Scotiabank", "RBC", "BMO", "CIBC"],
+    "mastercard": ["Scotiabank", "RBC", "BMO", "CIBC"],
+    "amex": ["Scotiabank", "RBC"],
+    "discover": ["Discover"]
+};
+// Select a random value from an array
+function getRandomItem(arr) {
+    return arr.length > 0 ? arr[Math.floor(Math.random() * arr.length)] : "";
+}
+// Handles when the user selects a bank
+function handleBankSelection(bankType) {
+    if (!bankToCards[bankType])
+        return;
+    const validCards = bankToCards[bankType];
+    const selectedCardType = getRandomItem(validCards);
+    updateDropdown("card-dropdown", validCards); // Update card dropdown options
+    updateImgs(selectedCardType, bankType);
+}
+// Handles when the user selects a card type
+function handleCardSelection(cardType) {
+    if (!cardToBanks[cardType])
+        return;
+    const validBanks = cardToBanks[cardType];
+    const selectedBank = getRandomItem(validBanks);
+    updateDropdown("bank-dropdown", validBanks); // Update bank dropdown options
+    updateImgs(cardType, selectedBank);
+}
+// Dynamically update dropdown options based on valid selections
+function updateDropdown(dropdownId, validOptions) {
+    const dropdown = document.getElementById(dropdownId);
+    if (!dropdown)
+        return;
+    dropdown.innerHTML = ""; // Clear existing options
+    validOptions.forEach(option => {
+        const newOption = document.createElement("option");
+        newOption.value = option;
+        newOption.textContent = option;
+        dropdown.appendChild(newOption);
+    });
+    dropdown.selectedIndex = 0; // Select the first valid option
+}
+// Updates images based on card type and bank
 function updateImgs(cardType, bankType) {
-    // constants for the card brand image, bank brand image, card front, and card back
     const cardBrandImg = document.getElementById('card-brand');
     const cardBrandImgBack = document.getElementById('card-brand-bottom');
     const bankBrandImg = document.getElementById('bank-brand');
     const cardFront = document.getElementById('credit-card');
     const cardBack = document.getElementById('card-back');
-    // update the images based on the selected card type and bank type, if no type is selected, clear the images
-    if (cardType !== '') {
+    if (cardType) {
         cardBrandImg.src = `../imgs/${cardType}.png`;
         cardBrandImg.alt = `${cardType} Card`;
         cardBrandImgBack.src = `../imgs/${cardType}.png`;
@@ -215,8 +240,7 @@ function updateImgs(cardType, bankType) {
         cardBrandImg.alt = '';
         cardBrandImgBack.src = '';
     }
-    // update the bank brand image based on the selected bank type, if no type is selected, clear the image
-    if (bankType !== '') {
+    if (bankType) {
         bankBrandImg.src = `../imgs/${bankType}.png`;
         bankBrandImg.alt = `${bankType} Bank`;
     }
@@ -224,7 +248,6 @@ function updateImgs(cardType, bankType) {
         bankBrandImg.src = '';
         bankBrandImg.alt = '';
     }
-    // update the card background based on the selected card type
     switch (cardType) {
         case "visa":
             cardFront.style.background = 'linear-gradient(135deg, #a6a6a6, #1a1f71)';
@@ -378,21 +401,26 @@ function makeCCNumber(ccType, ccLength, ccBank) {
     // return the generated credit card number
     return newCCNumber;
 }
-// generates a random date, name, and CVC for the credit card
+// Generate random name, date and cvc
 function randomDateNameCVC() {
-    // constants for the expiration date, card name, and CVC in the HTML
+    // Consts for the id of date, name and cvc
     const date = document.getElementById("card-expiry");
     const nameInput = document.getElementById('card-name');
     const cvc = document.getElementById('cvc');
-    // generate a random CVC between 100 and 999, and format it to have leading zeros if necessary
+    // Generate random number between 0 -> 999
     let randomCVC = Math.floor(Math.random() * 1000);
+    // If the cvc generated is less than 100 add a 0 in front
     if (randomCVC < 100) {
         cvc.innerHTML = "0" + randomCVC;
+        // If the cvc generated is less than 10 add 2 0's in front
+    }
+    else if (randomCVC < 10) {
+        cvc.innerHTML = "00" + randomCVC;
     }
     else {
-        cvc.innerHTML = randomCVC.toString();
+        cvc.innerHTML = randomCVC.toString(); // Convert the number into a string
     }
-    // generate a random name from a predefined list of names
+    // Generate a random name
     let name = '';
     let randomNumber = Math.random();
     name = randomNumber < 0.475 ? "James Lee" : randomNumber < 0.95 ? "Ayrton Wong" : "Mr. Hsiung";
