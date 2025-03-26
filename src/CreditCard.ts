@@ -178,9 +178,9 @@ function generateCCNumber(): void {
     }
     
     // Default values
-    let prefix = 0;
-    let cardLength = 16;
-    let bankType = '';
+    let prefix: number = 0;
+    let cardLength: number = 16;
+    let bankType: string = '';
     
     // Process selection based on option type
     if (selectedOption === "card") {
@@ -210,7 +210,7 @@ function generateCCNumber(): void {
         };
         
         // Set the prefix to whichever industry the user has chosen
-        const prefixOptions = industryPrefixes[selectedIndustryType];
+        const prefixOptions: number[] = industryPrefixes[selectedIndustryType];
         prefix = prefixOptions[Math.floor(Math.random() * prefixOptions.length)];
     } else {
         // Random prefix when selecting a bank
